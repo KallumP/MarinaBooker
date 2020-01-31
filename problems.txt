@@ -1,0 +1,4 @@
+turning currentorders into a struct rather than it being a class
+
+using a struct of a month start and end, which allows me to return two values from the get ordertime function
+this also allows me to store the start and end times that are available in one vector
