@@ -2,3 +2,6 @@ turning currentorders into a struct rather than it being a class
 
 using a struct of a month start and end, which allows me to return two values from the get ordertime function
 this also allows me to store the start and end times that are available in one vector
+
+instead of passing a value from method to method, I have made one global variable of a struct that can be edited by each method until 
+the end where it gets pushed on to the end of a vector as an order

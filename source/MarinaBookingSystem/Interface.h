@@ -21,12 +21,13 @@ struct FoundTime {
 	int end;
 };
 
-struct CurrentOrder {
+struct Order {
 	float depth;
 	float width;
 	float length;
 	std::string name;
 	FoundTime timeings;
+	float cost;
 };
 
 class Interface {
@@ -38,16 +39,25 @@ public:
 private:
 	void LoadOrders();
 	void MainMenu();
+
+
 	void TakeOrder();
+	void TakeDepth(int minDepth);
+	void TakeLength(int minDepth);
+	void FindTimeIntervals();
+	void TakeStartMonth(std::vector<FoundTime> foundTimes);
+	void TakeEndMonth();
+	void TakeName();
+	void CalculateCosts();
+	void ConfirmEntries();
+
+
 	void DeleteOrder();
 	void Simulation();
 	bool Exit();
-	FoundTime GetStartAndEnd(float length);
-
-	void ConfirmEntries();
 
 	std::vector<TimeStamp> timeTable;
-	BoatOrder allOrders;
-	CurrentOrder order;
+	std::vector<Order> allOrders;
+	Order order;
 };
 
