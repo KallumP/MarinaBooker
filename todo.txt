@@ -17,6 +17,8 @@ add a way to exit the program when in any of the stages
 
 make sure that string inputs are not too long (check against a cosntant size)
 
+change timeings struct to timestampindexes struct
+
 
 
 Information section:

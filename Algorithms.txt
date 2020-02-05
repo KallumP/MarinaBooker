@@ -1,0 +1,21 @@
+Getting the dates for a new order:
+
+Loop1 through each month and checks the length left in the marina per month
+
+If the length left is bigger than the length of the new boat, start a new loop2
+
+Loop2 through the months starting from the next month from the one we just found
+
+Do this until a month is found where there is not enough space in the marina for the new boat
+
+Once this month was found, save the loop1i and loop2j into a timestampindex object and push it to the list of foundintervals
+The object holding the start and end months is called an interval (which the user will later choose to book within)
+
+Once the final interval was found (if loop2 does not find any end months, then just take the final month from the timestamp list)
+output them all and ask the use what interval they want to book within.
+
+Pass the chosen interval into the ChooseFirstMonth method and ask them what month they want to choose from.
+
+Find out how many months the user can book for by taking the chosen start month and finding the difference from the interval's end month
+
+Ask the user how many months the want to book for. and then push the interval to the current order.
