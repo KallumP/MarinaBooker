@@ -19,3 +19,6 @@ Pass the chosen interval into the ChooseFirstMonth method and ask them what mont
 Find out how many months the user can book for by taking the chosen start month and finding the difference from the interval's end month
 
 Ask the user how many months the want to book for. and then push the interval to the current order.
+
+
+Registering the order times
