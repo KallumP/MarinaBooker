@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boat.cpp" />
-    <ClCompile Include="BoatOrder.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Marina.cpp" />
@@ -157,7 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boat.h" />
-    <ClInclude Include="BoatOrder.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Marina.h" />

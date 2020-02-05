@@ -1,19 +1,18 @@
 #pragma once
 
 #include "TimeStamp.h"
-#include "BoatOrder.h"
 
 #include <iostream>
 #include <vector>
 
 
 
-struct FoundTime {
-	FoundTime(int _start, int _end) {
+struct Timeings {
+	Timeings(int _start, int _end) {
 		start = _start;
 		end = _end;
 	}
-	FoundTime() {
+	Timeings() {
 		start = 0;
 		end = 0;
 	}
@@ -22,11 +21,12 @@ struct FoundTime {
 };
 
 struct Order {
+
 	float depth;
 	float width;
 	float length;
 	std::string name;
-	FoundTime timeings;
+	Timeings timeings;
 	float cost;
 };
 
@@ -40,21 +40,22 @@ private:
 	void LoadOrders();
 	void MainMenu();
 
-
 	void TakeOrder();
 	void TakeDepth(int minDepth);
 	void TakeLength(int minDepth);
 	void FindTimeIntervals();
-	void TakeStartMonth(std::vector<FoundTime> foundTimes);
+	void TakeInterval(std::vector<Timeings> foundTimes);
+	void TakeStartMonth(Timeings chosenInterval);
 	void TakeEndMonth();
 	void TakeName();
 	void CalculateCosts();
 	void ConfirmEntries();
 
-
+	void ShowAllOrders();
 	void DeleteOrder();
 	void Simulation();
 	bool Exit();
+	void Help();
 
 	std::vector<TimeStamp> timeTable;
 	std::vector<Order> allOrders;

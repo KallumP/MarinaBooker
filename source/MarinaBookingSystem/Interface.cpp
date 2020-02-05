@@ -1,13 +1,10 @@
 #include "Interface.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 //Constructor
 Interface::Interface() {
-
-	for (size_t i = 0; i < 24; i++)
-
-		timeTable.push_back(TimeStamp(i));
 
 	LoadOrders();
 }
@@ -21,7 +18,27 @@ Interface::~Interface() {
 //Loads up previous orders
 void Interface::LoadOrders() {
 
-	//load from a text file (same file location as the exe)
+	int year = 2020;
+	int month = 1;
+
+	for (size_t i = 0; i < 24; i++) {
+
+		//increases the date of the next timestamp to create
+		month++;
+
+		if (month > 12) {
+			month = 1;
+			year++;
+		}
+
+		//creates a text value of the date for the timestamp to create
+		std::string date = std::to_string(month) + "/" + std::to_string(year);
+
+
+		timeTable.push_back(TimeStamp(date));
+	}
+
+	//load orders from a text file (same file location as the exe)
 
 	MainMenu();
 }
@@ -29,8 +46,10 @@ void Interface::LoadOrders() {
 //The main menu that the user is presented with
 void Interface::MainMenu() {
 
+	std::string x;
+
 	//variable used to keep track of when to close the app
-	bool exit = true;
+	bool exit = false;
 
 	do {
 
@@ -43,7 +62,6 @@ void Interface::MainMenu() {
 		std::cout << "6. Help" << std::endl;
 
 		int input;
-
 		std::cin >> input;
 
 		//checks what the input was
@@ -65,13 +83,23 @@ void Interface::MainMenu() {
 			break;
 
 			case 4:
-			system("XLS");
+
+			system("CLS");
+			ShowAllOrders();
+
+			std::cout << "Press enter to continue";
+			std::cin >> x;
+
 			break;
 
 			case  5:
 			system("CLS");
 			exit = Exit();
 			break;
+
+			case 6:
+			system("CLS");
+
 
 			default:
 			system("CLS");
@@ -111,14 +139,13 @@ void Interface::TakeOrder() {
 
 	CalculateCosts();
 
-	ConfirmEntries();
+	system("CLS");
 
-	int input;
-	std::cin >> input;
+	ConfirmEntries();
 }
 
 //takes the user input for the boat depth
-void Interface::TakeDepth(int minDepth) {
+void Interface::TakeDepth(int maxDepth) {
 
 	float input;
 
@@ -130,18 +157,21 @@ void Interface::TakeDepth(int minDepth) {
 		std::cout << std::endl;
 
 		//checks to see if the input was within the bounds
-		if (input <= minDepth || input > 0)
+		if (input <= maxDepth && input > 0)
 			order.depth = input;
-		else if (input > minDepth)
-			std::cout << "This entry was too big (boat must be less than " << minDepth << " meters deep" << std::endl;
-		else if (input < 0)
-			std::cout << "A boat cannot be smaller than 0 meters deep!";
+		else if (input > maxDepth) {
+			system("CLS");
+			std::cout << "This entry was too big (boat must be less than " << maxDepth << " meters deep" << std::endl;
+		} else if (input <= 0) {
+			system("CLS");
+			std::cout << "A boat cannot be smaller than 0 meters deep!" << std::endl;
+		}
 
-	} while (input > minDepth || input <= 0);
+	} while (input > maxDepth || input <= 0);
 }
 
 //takes the user input for the boat length
-void Interface::TakeLength(int minLength) {
+void Interface::TakeLength(int maxLength) {
 
 	float input;
 
@@ -157,14 +187,17 @@ void Interface::TakeLength(int minLength) {
 		std::cout << std::endl;
 
 		//checks to see if the input was within the bounds
-		if (input <= minLength || input > 0)
+		if (input <= maxLength && input > 0)
 			order.length = input;
-		else if (input > minLength)
-			std::cout << "This entry was too big (the boat must be less than " << minLength << " meteres long" << std::endl;
-		else if (input <= 0)
-			std::cout << "A boat cannot be less than 0 meters long!";
+		else if (input > maxLength) {
+			system("CLS");
+			std::cout << "This entry was too big (the boat must be less than " << maxLength << " meteres long" << std::endl;
+		} else if (input <= 0) {
+			system("CLS");
+			std::cout << "A boat cannot be less than 0 meters long!" << std::endl;
+		}
 
-	} while (input > minLength || input <= 0);
+	} while (input > maxLength || input <= 0);
 }
 
 //outputs all the available times for a given boat length
@@ -172,7 +205,7 @@ void Interface::FindTimeIntervals() {
 
 	bool endFound = false;
 
-	std::vector<FoundTime> foundTimes;
+	std::vector<Timeings> foundTimes;
 
 	//loops through each month on the timetable
 	for (size_t i = 0; i < timeTable.size(); i++) {
@@ -190,7 +223,7 @@ void Interface::FindTimeIntervals() {
 					endFound = true;
 
 					//adds the found time gap to the list of times
-					foundTimes.push_back(FoundTime(i, j));
+					foundTimes.push_back(Timeings(i, j));
 
 					//sets i to j+1 so that the next set of available days can be found
 					i = j + 1;
@@ -206,21 +239,27 @@ void Interface::FindTimeIntervals() {
 				int foundCount = timeTable.size();
 
 				//adds on the last month, because it is the final usable date
-				foundTimes.push_back(FoundTime(i, foundCount - 1));
+				foundTimes.push_back(Timeings(i, foundCount - 1));
 
 				//stops searching for start months, as end of the list was reached 
 				break;
 			}
 		}
 	}
+
+	system("CLS");
+
+	TakeInterval(foundTimes);
 }
 
-//gets the start month from the user
-void Interface::TakeStartMonth(std::vector<FoundTime> foundTimes) {
+//gets what interval the user wants to order for
+void Interface::TakeInterval(std::vector<Timeings> foundTimes) {
 
 	int chosenIndex;
 
 	bool repeat = false;
+
+	Timeings chosenInterval;
 
 	if (foundTimes.size() != 0) {
 
@@ -236,13 +275,13 @@ void Interface::TakeStartMonth(std::vector<FoundTime> foundTimes) {
 			for (size_t i = 0; i < foundTimes.size(); i++) {
 
 				//outputs what month was found
-				std::cout << i + 1 << ". Month: " << foundTimes[i].start << " until ";
+				std::cout << i + 1 << ". " << timeTable[foundTimes[i].start].GetDate() << " until ";
 
 				//outputs what end month was found
-				std::cout << "month: " << foundTimes[i].end << std::endl;
+				std::cout << timeTable[foundTimes[i].end].GetDate() << std::endl;
 			}
 
-			std::cout << "Enter the number of the starting date you want";
+			std::cout << "Enter the number of the interval you want to book within: ";
 
 			//takes an input
 			std::cin >> chosenIndex;
@@ -252,7 +291,7 @@ void Interface::TakeStartMonth(std::vector<FoundTime> foundTimes) {
 
 
 			//checks to see if the input was wrong
-			if (chosenIndex < 0 && chosenIndex >= foundTimes.size()) {
+			if (chosenIndex < 0 || chosenIndex >= foundTimes.size()) {
 
 				system("CLS");
 
@@ -264,17 +303,55 @@ void Interface::TakeStartMonth(std::vector<FoundTime> foundTimes) {
 
 
 				//sets the chosen time to be the start time of the chosenIndex (I will set the end time later)
-				order.timeings = foundTimes[chosenIndex];
+				chosenInterval = foundTimes[chosenIndex];
 
-				repeat = true;
+				repeat = false;
 			}
 
 		} while (repeat);
 
 		system("CLS");
 
-		TakeEndMonth();
+		TakeStartMonth(chosenInterval);
 	}
+}
+
+//gets the starting month from the user
+void Interface::TakeStartMonth(Timeings chosenInterval) {
+
+	bool repeat = true;
+
+	std::string input;
+
+	int startingIndex;
+
+	do {
+
+		std::cout << "Enter the start date you want to order for (m/yyyy format no 0s on single digit months)" << std::endl;
+		std::cout << "You can book from " << timeTable[chosenInterval.start].GetDate() << " until " << timeTable[chosenInterval.end].GetDate() << std::endl;
+
+		std::cin >> input;
+
+		for (size_t i = chosenInterval.start; i < chosenInterval.end; i++) {
+
+			if (timeTable[i].GetDate() == input) {
+				repeat = false;
+
+				startingIndex = i;
+				//stops searching
+				break;
+			}
+		}
+
+	} while (repeat);
+
+	//saves where what index of timestamps the chosen date was from
+	order.timeings.start = startingIndex;
+	order.timeings.end = chosenInterval.end;
+
+	system("CLS");
+
+	TakeEndMonth();
 }
 
 //gets the end month from the user
@@ -292,7 +369,7 @@ void Interface::TakeEndMonth() {
 		//shows currently entered values
 		std::cout << "Entered depth: " << order.depth << std::endl;
 		std::cout << "Entered length: " << order.length << std::endl;
-		std::cout << "Start month: " << order.timeings.start << std::endl << std::endl;
+		std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl << std::endl;
 
 		//finds out how many months can be booked
 		int availableMonths = order.timeings.end - order.timeings.start;
@@ -331,8 +408,8 @@ void Interface::TakeName() {
 	//shows currently entered values
 	std::cout << "Entered depth: " << order.depth << std::endl;
 	std::cout << "Entered length: " << order.length << std::endl;
-	std::cout << "Start month: " << order.timeings.start << std::endl;
-	std::cout << "Start month: " << order.timeings.end << std::endl << std::endl;
+	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
+	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl << std::endl;
 
 	std::string input;
 
@@ -357,16 +434,17 @@ void Interface::ConfirmEntries() {
 
 	do {
 
-		std::cout << "Below are your entries. Are they correct? (y/n)" << std::endl;
+		std::cout << "Below are your entries. Are they correct?" << std::endl << std::endl;
 
 		//shows currently entered values
 		std::cout << "Entered depth: " << order.depth << std::endl;
 		std::cout << "Entered length: " << order.length << std::endl;
-		std::cout << "Start month: " << order.timeings.start << std::endl;
-		std::cout << "End month: " << order.timeings.end << std::endl;
+		std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
+		std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
 		std::cout << "Name: " << order.name << std::endl;
 		std::cout << "Cost: " << order.cost << std::endl << std::endl;
 
+		std::cout << "Enter (y or n): ";
 		std::string input;
 		std::cin >> input;
 
@@ -378,7 +456,7 @@ void Interface::ConfirmEntries() {
 			allOrders.push_back(order);
 
 			system("CLS");
-			std::cout << "Payment registered, order added to system" << std::endl;
+			std::cout << "Payment registered, order added to system" << std::endl << std::endl;
 
 		} else if (input == "n" || input == "N") {
 
@@ -394,6 +472,18 @@ void Interface::ConfirmEntries() {
 			std::cout << "Please enter either y or n" << std::endl;
 		}
 	} while (repeat);
+}
+
+//outputs all the orders
+void Interface::ShowAllOrders() {
+
+
+	if (allOrders.size() != 0)
+		for (size_t i = 0; i < allOrders.size(); i++)
+			std::cout << "Boat, length: " << allOrders[i].length << "m will be in the marina from month: " << timeTable[allOrders[i].timeings.start].GetDate() << " to month: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl;
+
+
+	
 }
 
 //allows the user to delete a user
@@ -432,4 +522,11 @@ bool Interface::Exit() {
 		std::cout << "Please enter either Y or N" << std::endl;
 
 	} while (true);
+}
+
+//shows help/advice about the program
+void Interface::Help() {
+
+
+
 }
