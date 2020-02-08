@@ -2,22 +2,16 @@ General:
 
 make sure that all inputs are number values
 
-When asking for a time to order, get the interval they want to order within (done)
-Ask for the start month that is within the start and the end of the chosen 
-and then ask for the end month that is within the start and then end of the chosen interval
-For the timestamp, save a string of the time name in the format "mm/yyyy", which will be used to show the user what time intervals can be orderd
-
-separate the time gathering one into a few different methods
-showing / gathering the available times to book
-getting the time interval they want to book within
-getting the start month
-getting the end month
-
 add a way to exit the program when in any of the stages
 
 make sure that string inputs are not too long (check against a cosntant size)
 
 change timeings struct to timestampindexes struct
+
+make a method that outputs the entered values of the current order
+check if a value is empty before outputting it
+
+use getline to get an input with spaces in it
 
 
 

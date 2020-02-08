@@ -7,3 +7,12 @@ I didn't define the constructors in the structs
 
 instead of passing a value from method to method, I have made one global variable of a struct that can be edited by each method until 
 the end where it gets pushed on to the end of a vector as an order
+
+When getting the start date of a user's order, I started with asking them what interval they wanted to order for. I then asked for their end date.
+(assuming that they wanted the first month from the interval they choose) This method was obviously wrong so I needed a way to set the date of each 
+time stamp, and ask the user what date they wanted from the interval they choose.
+
+I will set the date of each time stamp to take their respective date at the start of the program.
+This way, when outputting order values, it does not need to do any computations, it just outputs a string that it was assigned 
+to at the start of the program. The time will be stored in a mm/yyyy format
+

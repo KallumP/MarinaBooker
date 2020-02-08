@@ -133,7 +133,11 @@ void Interface::TakeOrder() {
 
 	system("CLS");
 
-	TakeName();
+	TakeUserFirstName();
+
+	system("CLS");
+
+	TakeBoatName();
 
 	system("CLS");
 
@@ -223,12 +227,13 @@ void Interface::FindTimeIntervals() {
 					endFound = true;
 
 					//adds the found time gap to the list of times
-					foundTimes.push_back(Timeings(i, j));
+					foundTimes.push_back(Timeings(i, j - 1));
 
 					//sets i to j+1 so that the next set of available days can be found
+					//because the current one is too small
 					i = j + 1;
 
-					//stops searching for an end
+					//stops searching for an end (once one was found)
 					break;
 				}
 			}
@@ -402,8 +407,8 @@ void Interface::TakeEndMonth() {
 	} while (repeat);
 }
 
-//takes the name of the person making the order
-void Interface::TakeName() {
+//takes the first name of the person making the order
+void Interface::TakeUserFirstName() {
 
 	//shows currently entered values
 	std::cout << "Entered depth: " << order.depth << std::endl;
@@ -411,14 +416,54 @@ void Interface::TakeName() {
 	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
 	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl << std::endl;
 
-	std::string input;
+	std::string nameInput;
 
-	std::cout << "Enter your name (first and last): ";
-
-	std::cin >> input;
+	std::cout << "Enter your name (first): ";
+	std::cin >> nameInput;
 	std::cout << std::endl;
+	order.name = nameInput;
 
-	order.name = input;
+	system("CLS");
+
+	TakeUserLastName();
+
+}
+
+//takes the last name of the person making the order
+void Interface::TakeUserLastName() {
+
+	//shows currently entered values
+	std::cout << "Entered depth: " << order.depth << std::endl;
+	std::cout << "Entered length: " << order.length << std::endl;
+	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
+	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
+	std::cout << "First name: " << order.name << std::endl << std::endl;
+
+	std::string nameInput;
+
+	std::cout << "Enter your name (last): ";
+	std::cin >> nameInput;
+	std::cout << std::endl;
+	order.name = order.name + " " + nameInput;
+}
+
+//takes the name of the boat
+void Interface::TakeBoatName() {
+
+	//shows currently entered values
+	std::cout << "Entered depth: " << order.depth << std::endl;
+	std::cout << "Entered length: " << order.length << std::endl;
+	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
+	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
+	std::cout << "Name: " << order.name << std::endl << std::endl;
+
+	std::string boatInput;
+
+	std::cout << "Enter your boats name: ";
+	std::cin >> boatInput;
+	std::cout << std::endl;
+	order.boatName = boatInput;
+
 }
 
 //calculates the cost using 10*length*months
@@ -442,6 +487,7 @@ void Interface::ConfirmEntries() {
 		std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
 		std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
 		std::cout << "Name: " << order.name << std::endl;
+		std::cout << "Boat name: " << order.boatName << std::endl;
 		std::cout << "Cost: " << order.cost << std::endl << std::endl;
 
 		std::cout << "Enter (y or n): ";
@@ -463,13 +509,13 @@ void Interface::ConfirmEntries() {
 			repeat = false;
 
 			system("CLS");
-			std::cout << "Transaction cancelling" << std::endl;
+			std::cout << "Transaction cancelled" << std::endl << std::endl;
 
 		} else {
 			repeat = true;
 
 			system("CLS");
-			std::cout << "Please enter either y or n" << std::endl;
+			std::cout << "Please enter either y or n" << std::endl << std::endl;
 		}
 	} while (repeat);
 }
@@ -477,13 +523,19 @@ void Interface::ConfirmEntries() {
 //outputs all the orders
 void Interface::ShowAllOrders() {
 
-
+	//makes sure that there are orders to output
 	if (allOrders.size() != 0)
-		for (size_t i = 0; i < allOrders.size(); i++)
-			std::cout << "Boat, length: " << allOrders[i].length << "m will be in the marina from month: " << timeTable[allOrders[i].timeings.start].GetDate() << " to month: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl;
 
+		//loops through each order
+		for (size_t i = 0; i < allOrders.size(); i++) {
 
-	
+			//outputs the vital info about each order
+			std::cout << order.name << std::endl;
+			std::cout << "Boat: " << order.boatName << std::endl;
+			std::cout << "Length: " << allOrders[i].length << "m" << std::endl;
+			std::cout << "Start: " << timeTable[allOrders[i].timeings.start].GetDate() << std::endl;
+			std::cout << "End: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl << std::endl;
+		}
 }
 
 //allows the user to delete a user
@@ -527,6 +579,8 @@ bool Interface::Exit() {
 //shows help/advice about the program
 void Interface::Help() {
 
-
+	std::cout << "Once a booking has been made";
+	std::cout << "You can arrive at the start of your month";
+	std::cout << "You must leave at the end of your end month";
 
 }

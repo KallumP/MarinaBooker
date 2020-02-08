@@ -26,6 +26,7 @@ struct Order {
 	float width;
 	float length;
 	std::string name;
+	std::string boatName;
 	Timeings timeings;
 	float cost;
 };
@@ -47,7 +48,9 @@ private:
 	void TakeInterval(std::vector<Timeings> foundTimes);
 	void TakeStartMonth(Timeings chosenInterval);
 	void TakeEndMonth();
-	void TakeName();
+	void TakeUserFirstName();
+	void TakeUserLastName();
+	void TakeBoatName();
 	void CalculateCosts();
 	void ConfirmEntries();
 
