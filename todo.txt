@@ -6,18 +6,15 @@ add a way to exit the program when in any of the stages
 
 make sure that string inputs are not too long (check against a cosntant size)
 
-change timeings struct to timestampindexes struct
-
 make a method that outputs the entered values of the current order
 check if a value is empty before outputting it
 
 use getline to get an input with spaces in it
 
+When an order is done, it should output an order number 
+which will be used for deleting
 
-
-Information section:
-
-Explain that boats can enter the marina any time from the start of the start month and must leave before the start of the end month
+check for leading 0s in the date input (making the order (start and end) and the delete order)
 
 
 

@@ -75,6 +75,7 @@ void Interface::MainMenu() {
 
 			case  2:
 			system("CLS");
+			DeleteOrder();
 			break;
 
 
@@ -87,9 +88,9 @@ void Interface::MainMenu() {
 			system("CLS");
 			ShowAllOrders();
 
-			std::cout << "Press enter to continue";
+			std::cout << "Press enter to continue" << std::endl;
 			std::cin >> x;
-
+			system("CLS");
 			break;
 
 			case  5:
@@ -99,7 +100,8 @@ void Interface::MainMenu() {
 
 			case 6:
 			system("CLS");
-
+			Help();
+			break;
 
 			default:
 			system("CLS");
@@ -209,7 +211,7 @@ void Interface::FindTimeIntervals() {
 
 	bool endFound = false;
 
-	std::vector<Timeings> foundTimes;
+	std::vector<TimeStampIndexes> foundTimes;
 
 	//loops through each month on the timetable
 	for (size_t i = 0; i < timeTable.size(); i++) {
@@ -227,7 +229,7 @@ void Interface::FindTimeIntervals() {
 					endFound = true;
 
 					//adds the found time gap to the list of times
-					foundTimes.push_back(Timeings(i, j - 1));
+					foundTimes.push_back(TimeStampIndexes(i, j - 1));
 
 					//sets i to j+1 so that the next set of available days can be found
 					//because the current one is too small
@@ -244,7 +246,7 @@ void Interface::FindTimeIntervals() {
 				int foundCount = timeTable.size();
 
 				//adds on the last month, because it is the final usable date
-				foundTimes.push_back(Timeings(i, foundCount - 1));
+				foundTimes.push_back(TimeStampIndexes(i, foundCount - 1));
 
 				//stops searching for start months, as end of the list was reached 
 				break;
@@ -258,13 +260,13 @@ void Interface::FindTimeIntervals() {
 }
 
 //gets what interval the user wants to order for
-void Interface::TakeInterval(std::vector<Timeings> foundTimes) {
+void Interface::TakeInterval(std::vector<TimeStampIndexes> foundTimes) {
 
 	int chosenIndex;
 
 	bool repeat = false;
 
-	Timeings chosenInterval;
+	TimeStampIndexes chosenInterval;
 
 	if (foundTimes.size() != 0) {
 
@@ -322,7 +324,7 @@ void Interface::TakeInterval(std::vector<Timeings> foundTimes) {
 }
 
 //gets the starting month from the user
-void Interface::TakeStartMonth(Timeings chosenInterval) {
+void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 
 	bool repeat = true;
 
@@ -331,6 +333,10 @@ void Interface::TakeStartMonth(Timeings chosenInterval) {
 	int startingIndex;
 
 	do {
+
+		//shows currently entered values
+		std::cout << "Entered depth: " << order.depth << std::endl;
+		std::cout << "Entered length: " << order.length << std::endl << std::endl;
 
 		std::cout << "Enter the start date you want to order for (m/yyyy format no 0s on single digit months)" << std::endl;
 		std::cout << "You can book from " << timeTable[chosenInterval.start].GetDate() << " until " << timeTable[chosenInterval.end].GetDate() << std::endl;
@@ -347,6 +353,10 @@ void Interface::TakeStartMonth(Timeings chosenInterval) {
 				break;
 			}
 		}
+
+		system("CLS");
+
+		std::cout << "Please enter a valid date" << std::endl << std::endl;
 
 	} while (repeat);
 
@@ -536,11 +546,99 @@ void Interface::ShowAllOrders() {
 			std::cout << "Start: " << timeTable[allOrders[i].timeings.start].GetDate() << std::endl;
 			std::cout << "End: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl << std::endl;
 		}
+
+	else
+
+		std::cout << "There are no orders yet" << std::endl;
 }
 
 //allows the user to delete a user
 void Interface::DeleteOrder() {
 
+
+	std::string boatName;
+	std::string startDate;
+	int dateIndex = -1;
+	int orderNumber = -1;
+
+	//TODO enter order number
+
+
+	std::cout << "Enter your boat name: " << std::endl;
+	std::cin >> boatName;
+
+	std::cout << "Enter your order start date (no leading 0s): " << std::endl;
+	std::cin >> startDate;
+
+	//loops through the timetable
+	for (size_t i = 0; i < timeTable.size(); i++) {
+
+		//checks to see if the date was the same as the input
+		if (timeTable[i].GetDate() == startDate) {
+
+			//saves the index
+			dateIndex = i;
+
+			//stops searching
+			break;
+		}
+	}
+
+	//checks to see if the date was valid
+	if (dateIndex != -1) {
+
+		int orderIndex = -1;
+
+		//loops through the orders
+		for (size_t i = 0; i < allOrders.size(); i++) {
+
+			//TODO checks if the order id is the same
+
+			//checks to see if the input details were correct
+			if (allOrders[i].boatName == boatName && allOrders[i].timeings.start == dateIndex) {
+
+				//saves the index of the order
+				orderIndex = i;
+
+				break;
+			}
+		}
+
+		//checks to see if an order was found
+		if (orderIndex != -1) {
+
+			system("CLS");
+
+			std::cout << "Boat name: " << boatName << std::endl;
+			std::cout << "Order being deleted: " << orderNumber << std::endl<< std::endl;
+
+			std::string input;
+
+			std::cout << "Are you sure you want to delete this (y/n)" << std::endl;
+
+			std::cin >> input;
+
+			if (input == "y" || input == "Y") {
+
+				allOrders.erase(allOrders.begin() + orderIndex);
+
+				system("CLS");
+				std::cout << "Order has been erased" << std::endl;
+
+			} else {
+				system("CLS");
+				std::cout << "Deletion cancelled" << std::endl;
+			}
+
+		} else {
+			system("CLS");
+			std::cout << "That order was not found" << std::endl;
+		}
+			
+	} else {
+		system("CLS");
+		std::cout << "That date was not valid" << std::endl;
+	}
 }
 
 //simulation sequence
@@ -581,6 +679,5 @@ void Interface::Help() {
 
 	std::cout << "Once a booking has been made";
 	std::cout << "You can arrive at the start of your month";
-	std::cout << "You must leave at the end of your end month";
-
+	std::cout << "You must leave at the end of your end month" << std::endl;
 }

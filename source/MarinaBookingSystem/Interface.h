@@ -7,12 +7,12 @@
 
 
 
-struct Timeings {
-	Timeings(int _start, int _end) {
+struct TimeStampIndexes {
+	TimeStampIndexes(int _start, int _end) {
 		start = _start;
 		end = _end;
 	}
-	Timeings() {
+	TimeStampIndexes() {
 		start = 0;
 		end = 0;
 	}
@@ -27,7 +27,7 @@ struct Order {
 	float length;
 	std::string name;
 	std::string boatName;
-	Timeings timeings;
+	TimeStampIndexes timeings;
 	float cost;
 };
 
@@ -45,8 +45,8 @@ private:
 	void TakeDepth(int minDepth);
 	void TakeLength(int minDepth);
 	void FindTimeIntervals();
-	void TakeInterval(std::vector<Timeings> foundTimes);
-	void TakeStartMonth(Timeings chosenInterval);
+	void TakeInterval(std::vector<TimeStampIndexes> foundTimes);
+	void TakeStartMonth(TimeStampIndexes chosenInterval);
 	void TakeEndMonth();
 	void TakeUserFirstName();
 	void TakeUserLastName();
