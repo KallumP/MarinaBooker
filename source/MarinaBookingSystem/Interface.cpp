@@ -1,4 +1,7 @@
 #include "Interface.h"
+#include "Order.h"
+#include "Environment.h"
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -81,6 +84,7 @@ void Interface::MainMenu() {
 
 			case  3:
 			system("CLS");
+			Simulation();
 			break;
 
 			case 4:
@@ -511,6 +515,12 @@ void Interface::ConfirmEntries() {
 			//puts the current order into the list of all orders
 			allOrders.push_back(order);
 
+			//goes through each month that was ordered for
+			for (size_t i = order.timeings.start; i <= order.timeings.end; i++)
+
+				//adjusts the timetable to now account for the new boat length
+				timeTable[i].AdjustLength(order.length);
+
 			system("CLS");
 			std::cout << "Payment registered, order added to system" << std::endl << std::endl;
 
@@ -644,6 +654,8 @@ void Interface::DeleteOrder() {
 //simulation sequence
 void Interface::Simulation() {
 
+	//makes the environement for the simulation
+	Environment e = Environment(allOrders);
 }
 
 //the exit sequence

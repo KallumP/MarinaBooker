@@ -1,27 +1,29 @@
 #pragma once
-#include <iostream>
-#include <vector>
 
 #include "Boat.h"
+#include "Marina.h"
+#include "Order.h"
+#include "LinkedList.h"
+
+#include <iostream>
+#include <vector>
 
 class Environment {
 
 public:
 
-	Environment();
+	Environment(std::vector<Order> allOrders);
 	~Environment();
 
-
 private:
-
+	void SetupBoatEntryOrder(std::vector<Order> allOrders);
 	void Loop();
 	void Proccess();
 	void Draw();
-	void AddBoat();
-	void RemoveBoat();
 
-	//Marina marina;
-	std::vector<Boat> entryOrder;
+	Marina marina;
+	LinkedList spawnOrder;
+
 	bool running;
 };
 

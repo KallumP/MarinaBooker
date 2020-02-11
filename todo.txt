@@ -21,3 +21,5 @@ check for leading 0s in the date input (making the order (start and end) and the
 Simulation:
 
 Remove boats all boats that need to leave, before adding any new boats
+
+Output the length left per month
