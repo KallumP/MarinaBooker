@@ -21,7 +21,6 @@ struct TimeStampIndexes {
 struct Order {
 
 	float depth;
-	float width;
 	float length;
 	std::string name;
 	std::string boatName;

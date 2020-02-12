@@ -23,10 +23,13 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 			allOrders[i].length,
 			allOrders[i].depth,
 			allOrders[i].timeings.start,
-			allOrders[i].timeings.end);
+			allOrders[i].timeings.end,
+			allOrders[i].boatName);
 
 		spawnOrder.AddItem(ListItem(toAdd));
 	}
+
+	spawnOrder.Output();
 }
 
 void Environment::Loop() {

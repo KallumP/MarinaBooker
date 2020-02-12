@@ -13,12 +13,21 @@ ListItem::ListItem(Boat _boat) {
 	prevBoat = nullptr;
 }
 
-int ListItem::GetBoatEnter() {
-	return boat.GetEnter();
+Boat ListItem::GetBoat() {
+	return boat;
+}
+
+
+ListItem* ListItem::GetNextPointer() {
+	return nextBoat;
 }
 
 void ListItem::SetNextPointer(ListItem* next) {
 	nextBoat = next;
+}
+
+ListItem* ListItem::GetPrevPointer() {
+	return prevBoat;
 }
 
 void ListItem::SetPrevPointer(ListItem* prev) {

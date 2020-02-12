@@ -28,6 +28,8 @@ private:
 	void TakeBoatName();
 	void CalculateCosts();
 	void ConfirmEntries();
+	void RegisterOrder();
+	void RegisterOrder(Order newOrder);
 
 	void ShowAllOrders();
 	void DeleteOrder();

@@ -12,14 +12,17 @@ public:
 
 	void AddItem(ListItem toAdd);
 	void SortFirstItem(ListItem toAdd);
-	void SortItem(ListItem toAdd);
+	void SortItem(ListItem toAdd, ListItem current);
 
 	void DeleteItem();
+
+	void Output();
+	void TraverseList(ListItem item);
 
 private:
 
 	std::vector<ListItem> spawnOrder;
-	int startIndex;
-	int endIndex;
+	ListItem start;
+	ListItem end;
 };
 

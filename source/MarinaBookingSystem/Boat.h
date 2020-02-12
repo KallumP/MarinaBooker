@@ -1,12 +1,14 @@
 #pragma once
+#include <iostream>
 class Boat {
 
 public:
 	Boat();
-	Boat(float _length, float _depth, int _entryMonth, int _leaveMonth);
+	Boat(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name);
 	~Boat();
 
 	int GetEnter();
+	std::string GetName();
 
 	void Leave(bool comeBack);
 	void Return();
@@ -19,5 +21,7 @@ private:
 	int leaveMonth;
 
 	float linePosition;
+
+	std::string name;
 };
 

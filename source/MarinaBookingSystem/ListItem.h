@@ -12,8 +12,10 @@ public:
 
 	void SetNextPointer(ListItem* next);
 	void SetPrevPointer(ListItem* next);
+	ListItem* GetPrevPointer();
+	ListItem* GetNextPointer();
 
-	int GetBoatEnter();
+	Boat GetBoat();
 private:
 	Boat boat;
 

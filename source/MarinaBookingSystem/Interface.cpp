@@ -43,6 +43,24 @@ void Interface::LoadOrders() {
 
 	//load orders from a text file (same file location as the exe)
 
+
+	for (int i = 1; i < 5; i++) {
+
+		Order autoGenOrder;
+
+		autoGenOrder.depth = (float)i;
+		autoGenOrder.length = (float)i;
+		autoGenOrder.boatName = "Boat" + std::to_string(i);
+		autoGenOrder.name = "Name" + std::to_string(i);
+
+		autoGenOrder.timeings.start = i;
+		autoGenOrder.timeings.end = i + 1;
+
+		RegisterOrder(autoGenOrder);
+	}
+
+
+
 	MainMenu();
 }
 
@@ -512,14 +530,7 @@ void Interface::ConfirmEntries() {
 
 			repeat = false;
 
-			//puts the current order into the list of all orders
-			allOrders.push_back(order);
-
-			//goes through each month that was ordered for
-			for (size_t i = order.timeings.start; i <= order.timeings.end; i++)
-
-				//adjusts the timetable to now account for the new boat length
-				timeTable[i].AdjustLength(order.length);
+			RegisterOrder();
 
 			system("CLS");
 			std::cout << "Payment registered, order added to system" << std::endl << std::endl;
@@ -540,6 +551,32 @@ void Interface::ConfirmEntries() {
 	} while (repeat);
 }
 
+//registers the order that was just made
+void Interface::RegisterOrder() {
+
+	//puts the current order into the list of all orders
+	allOrders.push_back(order);
+
+	//goes through each month that was ordered for
+	for (size_t i = order.timeings.start; i <= order.timeings.end; i++)
+
+		//adjusts the timetable to now account for the new boat length
+		timeTable[i].AdjustLength(order.length);
+}
+
+//registers an order that was made programmatically
+void Interface::RegisterOrder(Order newOrder) {
+
+	//puts the current order into the list of all orders
+	allOrders.push_back(newOrder);
+
+	//goes through each month that was ordered for
+	for (int i = newOrder.timeings.start; i <= newOrder.timeings.end; i++)
+
+		//adjusts the timetable to now account for the new boat length
+		timeTable[i].AdjustLength(newOrder.length);
+}
+
 //outputs all the orders
 void Interface::ShowAllOrders() {
 
@@ -551,7 +588,7 @@ void Interface::ShowAllOrders() {
 
 			//outputs the vital info about each order
 			std::cout << order.name << std::endl;
-			std::cout << "Boat: " << order.boatName << std::endl;
+			std::cout << "Boat: " << allOrders[i].boatName << std::endl;
 			std::cout << "Length: " << allOrders[i].length << "m" << std::endl;
 			std::cout << "Start: " << timeTable[allOrders[i].timeings.start].GetDate() << std::endl;
 			std::cout << "End: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl << std::endl;
@@ -620,7 +657,7 @@ void Interface::DeleteOrder() {
 			system("CLS");
 
 			std::cout << "Boat name: " << boatName << std::endl;
-			std::cout << "Order being deleted: " << orderNumber << std::endl<< std::endl;
+			std::cout << "Order being deleted: " << orderNumber << std::endl << std::endl;
 
 			std::string input;
 
@@ -644,7 +681,7 @@ void Interface::DeleteOrder() {
 			system("CLS");
 			std::cout << "That order was not found" << std::endl;
 		}
-			
+
 	} else {
 		system("CLS");
 		std::cout << "That date was not valid" << std::endl;
