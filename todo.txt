@@ -23,3 +23,6 @@ Simulation:
 Remove boats all boats that need to leave, before adding any new boats
 
 Output the length left per month
+
+push the toAdd to the linkedlist before calling sort, then pass in the address of the new item in the linked list
+pass in &spawnOrder[spawnOrder.size() - 1]
