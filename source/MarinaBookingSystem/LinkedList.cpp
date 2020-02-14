@@ -12,18 +12,41 @@ void LinkedList::AddItem(ListItem newItem) {
 	//adds the new list item to the linked list
 	spawnOrder.push_back(newItem);
 
-	//checks if there was anything in the linked list already
-	if (start == nullptr)
+	//starts the sort sequence
+	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+}
 
-		SortFirstItem(&spawnOrder[spawnOrder.size() - 1]);
+//sorts the item into the list
+void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
+
+	//checks to see if there was nothing in the list already
+	if (current == nullptr)
+
+		InsertFirstItem(newItem);
+
+	//checks if the newItem goes before the current item being checked and the current item was first in the list
+	else if (newItem->GetBoat().GetEnter() < current->GetBoat().GetEnter() && current->GetPrevPointer() == nullptr)
+
+		InsertFirstLocation(newItem, current);
+
+	//checks if the newItem goes before the current item being checked and the current item was not first in the list
+	else if (newItem->GetBoat().GetEnter() < current->GetBoat().GetEnter() && current->GetPrevPointer() != nullptr)
+
+		InsertCenterLocation(newItem, current->GetPrevPointer(), current);
+
+	//checks to see if the newItem goes after the current item being checked, and if the current item was the last in the list
+	else if (newItem->GetBoat().GetEnter() > current->GetBoat().GetEnter() && current->GetPrevPointer() == nullptr)
+
+		InsertLastLocation(newItem, current->GetPrevPointer());
 
 	else
 
-		SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+		//recursivley calls the sort function on the next item in the linked list
+		SortItem(newItem, current->GetNextPointer());
 }
 
-//Sorts the new item as a first item
-void LinkedList::SortFirstItem(ListItem* newItem) {
+//inserts the new item as a first item 
+void LinkedList::InsertFirstItem(ListItem* newItem) {
 
 	//lets the linked list know that the new item is the last item
 	newItem->SetNextPointer(nullptr);
@@ -35,44 +58,43 @@ void LinkedList::SortFirstItem(ListItem* newItem) {
 	start = newItem;
 }
 
-//sorts the item into the list
-void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
-	
-	//checks to see if the  item being added goes before the current item being checked
-	if (newItem->GetBoat().GetEnter() < current->GetBoat().GetEnter()) {
+//inserrts the new item into the first spot of the list (only needs the newItem)
+void LinkedList::InsertFirstLocation(ListItem* newItem, ListItem* next) {
 
-		//sets the new item's next pointer to point to the current item
-		newItem->SetNextPointer(current);
+	//sets the new item's next pointer to point to the current item
+	newItem->SetNextPointer(next);
 
-		//sets the new item's previous pointer to now point to the current item's previous pointer
-		newItem->SetPrevPointer(current->GetPrevPointer());
+	//sets the current item's previous pointer to point to the new item
+	next->SetPrevPointer(newItem);
 
-		//sets the current item's previous pointer to point to the new item
-		current->SetPrevPointer(newItem);
+	//sets the starting point at the new item
+	start = newItem;
+}
 
-		//checks to see if the current item being checked was the first in the linked list
-		if (current->GetPrevPointer() == nullptr)
+//inserts the new item into the center of the list (needs the newItem, the previousItem and the nextItem)
+void LinkedList::InsertCenterLocation(ListItem* newItem, ListItem* prev, ListItem* next) {
 
-			//sets the starting point at the new item
-			start = newItem;
+	//sets the previous item's next pointer to point to the new item
+	prev->SetNextPointer(newItem);
 
-	} else {
+	//sets the new item's prev pointer to piont to the previous item
+	newItem->SetPrevPointer(prev);
 
-		//checks to see if there were more items to sort through
-		if (current->GetNextPointer() != nullptr) {
+	//sets the new item's next pointer to point to the next item
+	newItem->SetNextPointer(next);
 
-			//calls the sort function on the next item in the linked list
-			SortItem(newItem, current->GetNextPointer());
+	//sets the next item's previous pointer to point to the new item
+	next->SetPrevPointer(newItem);
+}
 
-		} else {
+//inserts the new item into the end of the list (needs the newItem and the prvious item
+void LinkedList::InsertLastLocation(ListItem* newItem, ListItem* prev) {
 
-			//sets the current item's next pointer to point to the new item
-			current->SetNextPointer(newItem);
+	//sets the previous item's next pointer to point to the new item
+	prev->SetNextPointer(newItem);
 
-			//sets the new item's previous item pointer to point to the current item
-			newItem->SetPrevPointer(current);
-		}
-	}
+	//sets the new item's prev pointer to piont to the previous item
+	newItem->SetPrevPointer(prev);
 }
 
 //goes through the deleting protocol
