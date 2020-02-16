@@ -42,21 +42,55 @@ void Interface::LoadOrders() {
 
 	//load orders from a text file (same file location as the exe)
 
+	Order autoGenOrder;
+	int orderNumber;
 
-	for (int i = 1; i < 5; i++) {
+	orderNumber = 4;
+	autoGenOrder.depth = (float)orderNumber;
+	autoGenOrder.length = (float)orderNumber;
+	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
+	autoGenOrder.name = "Name " + std::to_string(orderNumber);
 
-		Order autoGenOrder;
+	autoGenOrder.timeings.start = orderNumber;
+	autoGenOrder.timeings.end = orderNumber;
 
-		autoGenOrder.depth = (float)i;
-		autoGenOrder.length = (float)i;
-		autoGenOrder.boatName = "Boat" + std::to_string(i);
-		autoGenOrder.name = "Name" + std::to_string(i);
+	RegisterOrder(autoGenOrder);
 
-		autoGenOrder.timeings.start = i;
-		autoGenOrder.timeings.end = i + 1;
 
-		RegisterOrder(autoGenOrder);
-	}
+	orderNumber = 2;
+	autoGenOrder.depth = (float)orderNumber;
+	autoGenOrder.length = (float)orderNumber;
+	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
+	autoGenOrder.name = "Name " + std::to_string(orderNumber);
+
+	autoGenOrder.timeings.start = orderNumber;
+	autoGenOrder.timeings.end = orderNumber;
+
+	RegisterOrder(autoGenOrder);
+
+
+	orderNumber = 2;
+	autoGenOrder.depth = (float)orderNumber;
+	autoGenOrder.length = (float)orderNumber;
+	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
+	autoGenOrder.name = "Name " + std::to_string(orderNumber);
+
+	autoGenOrder.timeings.start = orderNumber;
+	autoGenOrder.timeings.end = orderNumber;
+
+	RegisterOrder(autoGenOrder);
+
+
+	orderNumber = 3;
+	autoGenOrder.depth = (float)orderNumber;
+	autoGenOrder.length = (float)orderNumber;
+	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
+	autoGenOrder.name = "Name " + std::to_string(orderNumber);
+
+	autoGenOrder.timeings.start = orderNumber;
+	autoGenOrder.timeings.end = orderNumber;
+
+	RegisterOrder(autoGenOrder);
 
 
 

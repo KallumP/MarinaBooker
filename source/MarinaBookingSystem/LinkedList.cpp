@@ -1,9 +1,11 @@
 #include "LinkedList.h"
 #include "ListItem.h"
 
+//constructor
 LinkedList::LinkedList() {
 }
 
+//constructor
 LinkedList::LinkedList(int size) {
 
 	//sets up the linked list to a certain size
@@ -14,19 +16,6 @@ LinkedList::LinkedList(int size) {
 
 	//sets the start to point to nothing
 	start = nullptr;
-}
-
-//adds a new item using a boat
-void LinkedList::AddItem(Boat _boat) {
-
-	//adds a new list item to the linked list
-	spawnOrder[vectorInsert] = ListItem(_boat);
-
-	//starts the sort sequence
-	SortItem(&spawnOrder[vectorInsert], start);
-
-	//updates the insert position
-	vectorInsert++;
 }
 
 //adds a new item
@@ -41,21 +30,6 @@ void LinkedList::AddItem(ListItem newItem) {
 	//updates the insert position
 	vectorInsert++;
 }
-
-//adds a new item using the raw variables
-void LinkedList::AddItem(int length, int depth, int startTime, int endTime, std::string boatName) {
-
-	//adds a new list item to the linked list
-	spawnOrder[vectorInsert] = ListItem(Boat(length, depth, startTime, endTime, boatName));
-
-	//starts the sort sequence
-	SortItem(&spawnOrder[vectorInsert], start);
-
-	//updates the insert position
-	vectorInsert++;
-}
-
-
 
 //sorts the item into the list
 void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
@@ -76,7 +50,7 @@ void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
 		InsertCenterLocation(newItem, current->GetPrevPointer(), current);
 
 	//checks to see if the newItem goes after the current item being checked, and if the current item was the last in the list
-	else if (newItem->GetBoat().GetEnter() > current->GetBoat().GetEnter() && current->GetNextPointer() == nullptr)
+	else if (newItem->GetBoat().GetEnter() >= current->GetBoat().GetEnter() && current->GetNextPointer() == nullptr)
 
 		InsertLastLocation(newItem, current);
 
@@ -143,12 +117,14 @@ void LinkedList::DeleteItem() {
 
 }
 
-void LinkedList::Output() {
+//starts the output of the linked list
+void LinkedList::InitiateOutput() {
 
 	//starts traversing the list from the first item
 	TraverseList(start);
 }
 
+//traverses the list and outputs the list items identifiying variables
 void LinkedList::TraverseList(ListItem* item) {
 
 	//outputs the name and the entry time of the current item's boat
@@ -157,5 +133,4 @@ void LinkedList::TraverseList(ListItem* item) {
 	//checks to see if there were more in the list to traverse to
 	if (item->GetNextPointer() != nullptr)
 		TraverseList(item->GetNextPointer());
-
 }

@@ -3,7 +3,6 @@
 
 #include <vector>
 
-
 class LinkedList {
 
 public:
@@ -11,10 +10,7 @@ public:
 	LinkedList();
 	LinkedList(int size);
 
-	void AddItem(Boat toAdd);
 	void AddItem(ListItem newItem);
-	void AddItem(int length, int depth, int start, int end, std::string boatName);
-
 	void SortItem(ListItem* toAdd, ListItem* current);
 	void InsertFirstItem(ListItem* toAdd);
 	void InsertFirstLocation(ListItem* newItem, ListItem* next);
@@ -23,7 +19,7 @@ public:
 
 	void DeleteItem();
 
-	void Output();
+	void InitiateOutput();
 	void TraverseList(ListItem* item);
 
 private:

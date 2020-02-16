@@ -1,5 +1,4 @@
 #pragma once
-
 #include "TimeStamp.h"
 
 #include <iostream>

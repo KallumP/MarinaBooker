@@ -2,7 +2,6 @@
 
 #include "TimeStamp.h"
 
-
 TimeStamp::TimeStamp() {
 }
 

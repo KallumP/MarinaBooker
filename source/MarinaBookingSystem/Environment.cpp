@@ -1,7 +1,6 @@
 #include "Environment.h"
 #include "ListItem.h"
 
-
 Environment::Environment() {
 }
 
@@ -22,39 +21,18 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 	spawnOrder = LinkedList(allOrders.size());
 
 	//loops through each of the orders
-	for (size_t i = 0; i < allOrders.size(); i++) {
-
-		//creates a boat
-		//Boat toAdd = Boat(
-		//	allOrders[i].length,
-		//	allOrders[i].depth,
-		//	allOrders[i].timeings.start,
-		//	allOrders[i].timeings.end,
-		//	allOrders[i].boatName);
-
-		//adds the boat to the linked list
-		//spawnOrder.AddItem(toAdd);
-
+	for (size_t i = 0; i < allOrders.size(); i++)
 
 		//adds a list item to the linked list
-		//spawnOrder.AddItem(ListItem(Boat(
-		//	allOrders[i].length,
-		//	allOrders[i].depth,
-		//	allOrders[i].timeings.start,
-		//	allOrders[i].timeings.end,
-		//	allOrders[i].boatName)));
-		
-
-		//adds all the raw variables used to make a boat
-		spawnOrder.AddItem(
+		spawnOrder.AddItem(ListItem(Boat(
 			allOrders[i].length,
 			allOrders[i].depth,
 			allOrders[i].timeings.start,
 			allOrders[i].timeings.end,
-			allOrders[i].boatName);
-	}
+			allOrders[i].boatName)));
 
-	spawnOrder.Output();
+	//outputs the linked list
+	spawnOrder.InitiateOutput();
 }
 
 void Environment::Loop() {
