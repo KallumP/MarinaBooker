@@ -1,6 +1,10 @@
 #include "Environment.h"
 #include "ListItem.h"
 
+
+Environment::Environment() {
+}
+
 Environment::Environment(std::vector<Order> allOrders) {
 
 	marina = Marina();

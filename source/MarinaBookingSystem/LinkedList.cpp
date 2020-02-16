@@ -2,13 +2,15 @@
 #include "ListItem.h"
 
 LinkedList::LinkedList() {
-
 }
 
 LinkedList::LinkedList(int size) {
 
 	//sets up the linked list to a certain size
-	//spawnOrder = new Boat[size];
+	spawnOrder.resize(size);
+
+	//sets up the insert position for the vector to be 0
+	vectorInsert = 0;
 
 	//sets the start to point to nothing
 	start = nullptr;
@@ -18,30 +20,39 @@ LinkedList::LinkedList(int size) {
 void LinkedList::AddItem(Boat _boat) {
 
 	//adds a new list item to the linked list
-	spawnOrder.push_back(ListItem(_boat));
+	spawnOrder[vectorInsert] = ListItem(_boat);
 
 	//starts the sort sequence
-	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+	SortItem(&spawnOrder[vectorInsert], start);
+
+	//updates the insert position
+	vectorInsert++;
 }
 
 //adds a new item
 void LinkedList::AddItem(ListItem newItem) {
 
 	//adds a new list item to the linked list
-	spawnOrder.push_back(newItem);
+	spawnOrder[vectorInsert] = newItem;
 
 	//starts the sort sequence
-	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+	SortItem(&spawnOrder[vectorInsert], start);
+
+	//updates the insert position
+	vectorInsert++;
 }
 
 //adds a new item using the raw variables
 void LinkedList::AddItem(int length, int depth, int startTime, int endTime, std::string boatName) {
 
 	//adds a new list item to the linked list
-	spawnOrder.push_back(ListItem(Boat(length, depth, startTime, endTime, boatName)));
+	spawnOrder[vectorInsert] = ListItem(Boat(length, depth, startTime, endTime, boatName));
 
 	//starts the sort sequence
-	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+	SortItem(&spawnOrder[vectorInsert], start);
+
+	//updates the insert position
+	vectorInsert++;
 }
 
 
@@ -65,9 +76,9 @@ void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
 		InsertCenterLocation(newItem, current->GetPrevPointer(), current);
 
 	//checks to see if the newItem goes after the current item being checked, and if the current item was the last in the list
-	else if (newItem->GetBoat().GetEnter() > current->GetBoat().GetEnter() && current->GetPrevPointer() == nullptr)
+	else if (newItem->GetBoat().GetEnter() > current->GetBoat().GetEnter() && current->GetNextPointer() == nullptr)
 
-		InsertLastLocation(newItem, current->GetPrevPointer());
+		InsertLastLocation(newItem, current);
 
 	else
 

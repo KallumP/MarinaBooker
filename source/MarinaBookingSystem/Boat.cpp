@@ -1,13 +1,6 @@
 #include "Boat.h"
 
 Boat::Boat() {
-	length = -1;
-	depth = -1;
-
-	entryMonth = -1;
-	leaveMonth = -1;
-
-	linePosition = -1;
 }
 
 Boat::Boat(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name) {

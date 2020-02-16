@@ -1,6 +1,10 @@
 #include "Marina.h"
 
-Marina::Marina() {}
-Marina::~Marina() {}
+Marina::Marina() {
+}
 
-void Marina::SpawnBoat(Boat toSpawn) {}
+Marina::~Marina() {
+}
+
+void Marina::SpawnBoat(Boat toSpawn) {
+}

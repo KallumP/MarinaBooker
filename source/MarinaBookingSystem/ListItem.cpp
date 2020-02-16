@@ -1,7 +1,6 @@
 #include "ListItem.h"
 #include "Boat.h"
 
-
 ListItem::ListItem() {
 	nextBoat = nullptr;
 	prevBoat = nullptr;

@@ -8,7 +8,6 @@
 
 //Constructor
 Interface::Interface() {
-
 	LoadOrders();
 }
 

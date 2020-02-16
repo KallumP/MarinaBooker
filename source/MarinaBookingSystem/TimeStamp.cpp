@@ -4,7 +4,6 @@
 
 
 TimeStamp::TimeStamp() {
-
 }
 
 TimeStamp::TimeStamp(std::string _date) {
@@ -15,7 +14,6 @@ TimeStamp::TimeStamp(std::string _date) {
 
 
 TimeStamp::~TimeStamp() {
-
 }
 
 //adjusts the amount of length used on this timestamp

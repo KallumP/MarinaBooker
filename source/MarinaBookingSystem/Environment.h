@@ -12,6 +12,7 @@ class Environment {
 
 public:
 
+	Environment();
 	Environment(std::vector<Order> allOrders);
 	~Environment();
 

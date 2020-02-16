@@ -29,6 +29,7 @@ public:
 private:
 
 	std::vector<ListItem> spawnOrder;
+	int vectorInsert;
 	ListItem* start;
 };
 
