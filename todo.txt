@@ -26,3 +26,6 @@ Output the length left per month
 
 in the linked list, don't have all the computations in the if statements
 some elses dont' need to check if they belong after (since its the only option left)
+
+Have LinkedList.AddItem() take in a boat, and in that method, push back a new ListItem(passed in boat)
+this is for memory management

@@ -14,19 +14,40 @@ Environment::~Environment() {
 
 void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 
-	Boat toAdd;
+	//instantiates the linked list
+	spawnOrder = LinkedList(allOrders.size());
 
 	//loops through each of the orders
 	for (size_t i = 0; i < allOrders.size(); i++) {
 
-		toAdd = Boat(
+		//creates a boat
+		//Boat toAdd = Boat(
+		//	allOrders[i].length,
+		//	allOrders[i].depth,
+		//	allOrders[i].timeings.start,
+		//	allOrders[i].timeings.end,
+		//	allOrders[i].boatName);
+
+		//adds the boat to the linked list
+		//spawnOrder.AddItem(toAdd);
+
+
+		//adds a list item to the linked list
+		//spawnOrder.AddItem(ListItem(Boat(
+		//	allOrders[i].length,
+		//	allOrders[i].depth,
+		//	allOrders[i].timeings.start,
+		//	allOrders[i].timeings.end,
+		//	allOrders[i].boatName)));
+		
+
+		//adds all the raw variables used to make a boat
+		spawnOrder.AddItem(
 			allOrders[i].length,
 			allOrders[i].depth,
 			allOrders[i].timeings.start,
 			allOrders[i].timeings.end,
 			allOrders[i].boatName);
-
-		spawnOrder.AddItem(ListItem(toAdd));
 	}
 
 	spawnOrder.Output();

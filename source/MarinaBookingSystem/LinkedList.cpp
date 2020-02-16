@@ -3,18 +3,48 @@
 
 LinkedList::LinkedList() {
 
+}
+
+LinkedList::LinkedList(int size) {
+
+	//sets up the linked list to a certain size
+	//spawnOrder = new Boat[size];
+
 	//sets the start to point to nothing
 	start = nullptr;
 }
 
+//adds a new item using a boat
+void LinkedList::AddItem(Boat _boat) {
+
+	//adds a new list item to the linked list
+	spawnOrder.push_back(ListItem(_boat));
+
+	//starts the sort sequence
+	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+}
+
+//adds a new item
 void LinkedList::AddItem(ListItem newItem) {
 
-	//adds the new list item to the linked list
+	//adds a new list item to the linked list
 	spawnOrder.push_back(newItem);
 
 	//starts the sort sequence
 	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
 }
+
+//adds a new item using the raw variables
+void LinkedList::AddItem(int length, int depth, int startTime, int endTime, std::string boatName) {
+
+	//adds a new list item to the linked list
+	spawnOrder.push_back(ListItem(Boat(length, depth, startTime, endTime, boatName)));
+
+	//starts the sort sequence
+	SortItem(&spawnOrder[spawnOrder.size() - 1], start);
+}
+
+
 
 //sorts the item into the list
 void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
