@@ -17,13 +17,13 @@ public:
 	void InsertCenterLocation(ListItem* toAdd, ListItem* prev, ListItem* next);
 	void InsertLastLocation(ListItem* toAdd, ListItem* prev);
 
-	void DeleteItem();
+	void DeleteItem(ListItem* toRemove);
 
 	void OutputBoats(bool forward);
 
 private:
 
-	std::vector<ListItem> spawnOrder;
+	std::vector<ListItem> boatSpawnOrder;
 	int vectorInsert;
 	ListItem* start;
 	ListItem* end;

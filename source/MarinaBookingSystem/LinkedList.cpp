@@ -1,21 +1,17 @@
 #include "LinkedList.h"
 #include "ListItem.h"
 
+#include <vector>
+
 //constructor
 LinkedList::LinkedList() {
-
-	//sets up the insert position for the vector to be 0
-	vectorInsert = 0;
-
-	//sets the start to point to nothing
-	start = nullptr;
 }
 
 //constructor
 LinkedList::LinkedList(int size) {
 
 	//sets up the linked list to a certain size
-	spawnOrder.resize(size);
+	boatSpawnOrder.resize(size);
 
 	//sets up the insert position for the vector to be 0
 	vectorInsert = 0;
@@ -31,10 +27,10 @@ LinkedList::LinkedList(int size) {
 void LinkedList::AddItem(ListItem newItem) {
 
 	//adds a new list item to the linked list
-	spawnOrder[vectorInsert] = newItem;
+	boatSpawnOrder[vectorInsert] = newItem;
 
 	//starts the sort sequence
-	SortItem(&spawnOrder[vectorInsert], start);
+	SortItem(&boatSpawnOrder[vectorInsert], start);
 
 	//updates the insert position
 	vectorInsert++;
@@ -128,8 +124,31 @@ void LinkedList::InsertLastLocation(ListItem* newItem, ListItem* prev) {
 }
 
 //goes through the deleting protocol
-void LinkedList::DeleteItem() {
+void LinkedList::DeleteItem(ListItem* toRemove) {
 
+	//checks to see if this was the first item
+	if (toRemove->GetPrevPointer() == nullptr) {
+
+		//sets the start to the next item
+		start = toRemove->GetNextPointer();
+
+		//sets the next item's previous item to the current item's previous item
+		toRemove->GetNextPointer()->SetPrevPointer(toRemove->GetPrevPointer());
+	}
+
+	//loops through all the orders
+	for (int i = 0; i < boatSpawnOrder.size(); i++) {
+
+		//checks to see if the address of the toRemove is the same as the current loop one
+		if (&boatSpawnOrder[i] == toRemove) {
+
+			//deletes the order
+			boatSpawnOrder.erase(boatSpawnOrder.begin() + i);
+
+			//stops searching
+			break;
+		}
+	}
 }
 
 //starts the output of the linked list
