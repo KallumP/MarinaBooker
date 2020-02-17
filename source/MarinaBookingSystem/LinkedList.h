@@ -19,13 +19,13 @@ public:
 
 	void DeleteItem();
 
-	void InitiateOutput();
-	void TraverseList(ListItem* item);
+	void OutputBoats(bool forward);
 
 private:
 
 	std::vector<ListItem> spawnOrder;
 	int vectorInsert;
 	ListItem* start;
+	ListItem* end;
 };
 

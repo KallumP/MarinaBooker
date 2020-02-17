@@ -32,7 +32,14 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 			allOrders[i].boatName)));
 
 	//outputs the linked list
-	spawnOrder.InitiateOutput();
+	spawnOrder.OutputBoats(true);
+	spawnOrder.OutputBoats(false);
+
+	int x;
+	std::cout << "Enter something to continue" << std::endl;
+	std::cin.get();
+
+
 }
 
 void Environment::Loop() {

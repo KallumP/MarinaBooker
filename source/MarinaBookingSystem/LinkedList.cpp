@@ -3,6 +3,12 @@
 
 //constructor
 LinkedList::LinkedList() {
+
+	//sets up the insert position for the vector to be 0
+	vectorInsert = 0;
+
+	//sets the start to point to nothing
+	start = nullptr;
 }
 
 //constructor
@@ -16,6 +22,9 @@ LinkedList::LinkedList(int size) {
 
 	//sets the start to point to nothing
 	start = nullptr;
+
+	//sets the end to point to nothing
+	end = nullptr;
 }
 
 //adds a new item
@@ -71,6 +80,9 @@ void LinkedList::InsertFirstItem(ListItem* newItem) {
 
 	//lets the linked list know to start at the new item
 	start = newItem;
+
+	//lest the linked list know that the new item is also the end
+	end = newItem;
 }
 
 //inserrts the new item into the first spot of the list (only needs the newItem)
@@ -110,6 +122,9 @@ void LinkedList::InsertLastLocation(ListItem* newItem, ListItem* prev) {
 
 	//sets the new item's prev pointer to piont to the previous item
 	newItem->SetPrevPointer(prev);
+
+	//sets up where the end of the list is
+	end = newItem;
 }
 
 //goes through the deleting protocol
@@ -118,19 +133,49 @@ void LinkedList::DeleteItem() {
 }
 
 //starts the output of the linked list
-void LinkedList::InitiateOutput() {
+void LinkedList::OutputBoats(bool forward) {
 
-	//starts traversing the list from the first item
-	TraverseList(start);
-}
+	//declares a list item to hold what item to call the traversal on
+	ListItem* next;
 
-//traverses the list and outputs the list items identifiying variables
-void LinkedList::TraverseList(ListItem* item) {
+	//checks to see if the traversal should be forward or backwards
+	if (forward) {
 
-	//outputs the name and the entry time of the current item's boat
-	std::cout << "Boat: " << item->GetBoat().GetName() << " will be entering at: " << item->GetBoat().GetEnter() << std::endl;
+		//sets the traversal at thes start of the list
+		next = start;
 
-	//checks to see if there were more in the list to traverse to
-	if (item->GetNextPointer() != nullptr)
-		TraverseList(item->GetNextPointer());
+		std::cout << "Forward Traversal" << std::endl;
+
+
+		//keeps traversing until there are no more list items left
+		while (next != nullptr){
+
+			//outputs the name and the entry time of the current item's boat
+			std::cout << "Boat: " << next->GetBoat().GetName() << " will be entering at: " << next->GetBoat().GetEnter() << std::endl;
+
+			//traverses the list
+			next = next->GetNextPointer();
+		}
+
+		std::cout << std::endl << std::endl << std::endl;
+			
+
+	} else if (!forward && end != nullptr) {
+		
+		//sets the traversal at the end of the list
+		next = end;
+
+		std::cout << "Backward Traversal" << std::endl;
+
+		while (next != nullptr) {
+
+			//outputs the name and the entry time of the current item's boat
+			std::cout << "Boat: " << next->GetBoat().GetName() << " will be entering at: " << next->GetBoat().GetEnter() << std::endl;
+
+			//gets the previous item
+			next = next->GetPrevPointer();
+		}
+
+		std::cout << std::endl << std::endl << std::endl;
+	}
 }
