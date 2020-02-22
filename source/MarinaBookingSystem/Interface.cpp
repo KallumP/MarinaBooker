@@ -186,12 +186,11 @@ void Interface::TakeOrder() {
 
 	system("CLS");
 
-	//gets the start and end month
 	FindTimeIntervals();
 
 	system("CLS");
 
-	TakeUserFirstName();
+	TakeUserName();
 
 	system("CLS");
 
@@ -474,7 +473,7 @@ void Interface::TakeEndMonth() {
 }
 
 //takes the first name of the person making the order
-void Interface::TakeUserFirstName() {
+void Interface::TakeUserName() {
 
 	//shows currently entered values
 	std::cout << "Entered depth: " << order.depth << std::endl;
@@ -482,35 +481,9 @@ void Interface::TakeUserFirstName() {
 	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
 	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl << std::endl;
 
-	std::string nameInput;
-
-	std::cout << "Enter your name (first): ";
-	std::cin >> nameInput;
-	std::cout << std::endl;
-	order.name = nameInput;
-
-	system("CLS");
-
-	TakeUserLastName();
-
-}
-
-//takes the last name of the person making the order
-void Interface::TakeUserLastName() {
-
-	//shows currently entered values
-	std::cout << "Entered depth: " << order.depth << std::endl;
-	std::cout << "Entered length: " << order.length << std::endl;
-	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
-	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
-	std::cout << "First name: " << order.name << std::endl << std::endl;
-
-	std::string nameInput;
-
-	std::cout << "Enter your name (last): ";
-	std::cin >> nameInput;
-	std::cout << std::endl;
-	order.name = order.name + " " + nameInput;
+	std::cout << "Enter your name: ";
+	std::cin.ignore();
+	std::getline(std::cin, order.name);
 }
 
 //takes the name of the boat
@@ -523,13 +496,10 @@ void Interface::TakeBoatName() {
 	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
 	std::cout << "Name: " << order.name << std::endl << std::endl;
 
-	std::string boatInput;
-
 	std::cout << "Enter your boats name: ";
-	std::cin >> boatInput;
-	std::cout << std::endl;
-	order.boatName = boatInput;
 
+	//std::cin.ignore();
+	std::getline(std::cin, order.boatName);
 }
 
 //calculates the cost using 10*length*months
@@ -621,7 +591,7 @@ void Interface::ShowAllOrders() {
 		for (size_t i = 0; i < allOrders.size(); i++) {
 
 			//outputs the vital info about each order
-			std::cout << order.name << std::endl;
+			std::cout << allOrders[i].name << std::endl;
 			std::cout << "Boat: " << allOrders[i].boatName << std::endl;
 			std::cout << "Length: " << allOrders[i].length << "m" << std::endl;
 			std::cout << "Start: " << timeTable[allOrders[i].timeings.start].GetDate() << std::endl;
@@ -646,7 +616,8 @@ void Interface::DeleteOrder() {
 
 
 	std::cout << "Enter your boat name: " << std::endl;
-	std::cin >> boatName;
+	std::cin.ignore();
+	std::getline(std::cin, boatName);
 
 	std::cout << "Enter your order start date (no leading 0s): " << std::endl;
 	std::cin >> startDate;

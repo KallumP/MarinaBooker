@@ -16,3 +16,6 @@ I will set the date of each time stamp to take their respective date at the star
 This way, when outputting order values, it does not need to do any computations, it just outputs a string that it was assigned 
 to at the start of the program. The time will be stored in a mm/yyyy format
 
+cin.get skips, fixed with cin.ignore()
+https://cboard.cprogramming.com/cplusplus-programming/80399-why-doesnt-cin-get-pause-program.html
+

@@ -4,10 +4,7 @@ make sure that all inputs are number values
 
 add a way to exit the program when in any of the stages
 
-make sure that string inputs are not too long (check against a cosntant size)
-
-make a method that outputs the entered values of the current order
-check if a value is empty before outputting it
+make sure that string inputs are not too long (check against a constant size)
 
 use getline to get an input with spaces in it
 
@@ -16,6 +13,8 @@ which will be used for deleting
 
 check for leading 0s in the date input (making the order (start and end) and the delete order)
 
+write to/read from file
+
 
 
 Simulation:
@@ -23,9 +22,6 @@ Simulation:
 Remove boats all boats that need to leave, before adding any new boats
 
 Output the length left per month
-
-in the linked list, don't have all the computations in the if statements
-some elses dont' need to check if they belong after (since its the only option left)
 
 Have LinkedList.AddItem() take in a boat, and in that method, push back a new ListItem(passed in boat)
 this is for memory management

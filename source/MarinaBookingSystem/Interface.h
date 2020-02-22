@@ -22,8 +22,7 @@ private:
 	void TakeInterval(std::vector<TimeStampIndexes> foundTimes);
 	void TakeStartMonth(TimeStampIndexes chosenInterval);
 	void TakeEndMonth();
-	void TakeUserFirstName();
-	void TakeUserLastName();
+	void TakeUserName();
 	void TakeBoatName();
 	void CalculateCosts();
 	void ConfirmEntries();
