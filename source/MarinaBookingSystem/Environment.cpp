@@ -35,11 +35,11 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 	spawnOrder.OutputBoats(true);
 	spawnOrder.OutputBoats(false);
 
-	int x;
-	std::cout << "Enter something to continue" << std::endl;
+	std::cout << "Press enter to continue" << std::endl;
+	std::cin.ignore(); 
 	std::cin.get();
 
-
+	system("CLS");
 }
 
 void Environment::Loop() {

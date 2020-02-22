@@ -144,7 +144,8 @@ void Interface::MainMenu() {
 			ShowAllOrders();
 
 			std::cout << "Press enter to continue" << std::endl;
-			std::cin >> x;
+			std::cin.ignore();
+			std::cin.get();
 			system("CLS");
 			break;
 
@@ -759,7 +760,16 @@ bool Interface::Exit() {
 //shows help/advice about the program
 void Interface::Help() {
 
-	std::cout << "Once a booking has been made";
-	std::cout << "You can arrive at the start of your month";
-	std::cout << "You must leave at the end of your end month" << std::endl;
+	std::cout << "Once a booking has been made" << std::endl;
+	std::cout << "You can arrive at the start of your month" << std::endl;
+	std::cout << "You must leave at the end of your end month" << std::endl<< std::endl<< std::endl;
+
+	std::cout << "Showing all orders in the console is in the order that the orders came in" << std::endl;
+	std::cout << "To see a chronological order, enter the simulation" << std::endl<< std::endl<< std::endl;
+
+	std::cout << "Press enter to continue" << std::endl;
+	std::cin.ignore();
+	std::cin.get();
+
+	system("CLS");
 }
