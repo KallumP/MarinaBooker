@@ -6,12 +6,8 @@ add a way to exit the program when in any of the stages
 
 make sure that string inputs are not too long (check against a constant size)
 
-use getline to get an input with spaces in it
-
 When an order is done, it should output an order number 
 which will be used for deleting
-
-check for leading 0s in the date input (making the order (start and end) and the delete order)
 
 write to/read from file
 

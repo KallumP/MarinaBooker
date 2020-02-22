@@ -385,7 +385,7 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 
 	std::string input;
 
-	int startingIndex;
+	int startingIndex = -1;
 
 	do {
 
@@ -393,25 +393,53 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 		std::cout << "Entered depth: " << order.depth << std::endl;
 		std::cout << "Entered length: " << order.length << std::endl << std::endl;
 
-		std::cout << "Enter the start date you want to order for (m/yyyy format no 0s on single digit months)" << std::endl;
+		std::cout << "Enter the start date you want to order for (mm/yyyy format)" << std::endl;
 		std::cout << "You can book from " << timeTable[chosenInterval.start].GetDate() << " until " << timeTable[chosenInterval.end].GetDate() << std::endl;
 
 		std::cin >> input;
 
-		for (size_t i = chosenInterval.start; i < chosenInterval.end; i++) {
+		//checks to see if there was more than 2 characters in the input
+		if (input.length() > 2) {
 
-			if (timeTable[i].GetDate() == input) {
-				repeat = false;
+			repeat = false;
 
-				startingIndex = i;
-				//stops searching
-				break;
-			}
+			//checks to see if the first number was a "0"
+			if (input.substr(0, 1) == "0")
+
+				input = input.substr(1, input.length() - 1);
+
+		} else {
+
+			//registers that the input was bad
+			repeat = true;
 		}
+
+		//checks to see if there was a bad input (too short to be in a date format)
+		if (!repeat)
+
+			//loops through each month
+			for (size_t i = chosenInterval.start; i < chosenInterval.end; i++)
+
+				//checks to see if the input date matches the current month's date
+				if (timeTable[i].GetDate() == input) {
+
+					//registers that a good date was entered
+					repeat = false;
+
+					//saves what month was entered
+					startingIndex = i;
+
+					//stops searching
+					break;
+				}
 
 		system("CLS");
 
-		std::cout << "Please enter a valid date" << std::endl << std::endl;
+		//checks to see if there was a bad input
+		if (repeat)
+
+			//tells the user that there was a bad input
+			std::cout << "Please enter a valid date" << std::endl << std::endl;
 
 	} while (repeat);
 
@@ -733,10 +761,10 @@ void Interface::Help() {
 
 	std::cout << "Once a booking has been made" << std::endl;
 	std::cout << "You can arrive at the start of your month" << std::endl;
-	std::cout << "You must leave at the end of your end month" << std::endl<< std::endl<< std::endl;
+	std::cout << "You must leave at the end of your end month" << std::endl << std::endl << std::endl;
 
 	std::cout << "Showing all orders in the console is in the order that the orders came in" << std::endl;
-	std::cout << "To see a chronological order, enter the simulation" << std::endl<< std::endl<< std::endl;
+	std::cout << "To see a chronological order, enter the simulation" << std::endl << std::endl << std::endl;
 
 	std::cout << "Press enter to continue" << std::endl;
 	std::cin.ignore();
