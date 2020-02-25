@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <ctime>
 
 //Constructor
 Interface::Interface() {
@@ -20,10 +21,20 @@ Interface::~Interface() {
 //Loads up previous orders
 void Interface::LoadOrders() {
 
-	int year = 2020;
-	int month = 1;
+	time_t* now = new time_t();
+	*now = time(NULL);
 
-	for (size_t i = 0; i < 24; i++) {
+
+	tm* ltm = new tm();
+	localtime_s(ltm, now);
+	
+	//gets the current year (since 1900)
+	int year = ltm->tm_year + 1900;
+	
+	//gets the current month (normalised to 0)
+	int month = ltm->tm_mon - 1;
+
+	for (int i = 0; i < 24; i++) {
 
 		//increases the date of the next timestamp to create
 		month++;
@@ -38,6 +49,9 @@ void Interface::LoadOrders() {
 
 
 		timeTable.push_back(TimeStamp(date));
+
+		//outputs the most recently entered date
+		//std::cout << timeTable[timeTable.size() - 1].GetDate() << std::endl;
 	}
 
 	//load orders from a text file (same file location as the exe)
@@ -57,7 +71,7 @@ void Interface::LoadOrders() {
 	RegisterOrder(autoGenOrder);
 
 
-	orderNumber = 2;
+	orderNumber = 5;
 	autoGenOrder.depth = (float)orderNumber;
 	autoGenOrder.length = (float)orderNumber;
 	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
@@ -69,7 +83,7 @@ void Interface::LoadOrders() {
 	RegisterOrder(autoGenOrder);
 
 
-	orderNumber = 2;
+	orderNumber = 5;
 	autoGenOrder.depth = (float)orderNumber;
 	autoGenOrder.length = (float)orderNumber;
 	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
@@ -81,7 +95,7 @@ void Interface::LoadOrders() {
 	RegisterOrder(autoGenOrder);
 
 
-	orderNumber = 3;
+	orderNumber = 8;
 	autoGenOrder.depth = (float)orderNumber;
 	autoGenOrder.length = (float)orderNumber;
 	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
