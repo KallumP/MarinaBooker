@@ -9,7 +9,12 @@
 
 //Constructor
 Interface::Interface() {
+
+	SetupTimeTable(24);
+
 	LoadOrders();
+
+	MainMenu();
 }
 
 //Desctructor
@@ -18,23 +23,22 @@ Interface::~Interface() {
 
 }
 
-//Loads up previous orders
-void Interface::LoadOrders() {
+//sets up the timetable to reach a certain number of months from the next month from today
+void Interface::SetupTimeTable(int noOfMonths) {
 
 	time_t* now = new time_t();
 	*now = time(NULL);
 
-
 	tm* ltm = new tm();
 	localtime_s(ltm, now);
-	
+
 	//gets the current year (since 1900)
 	int year = ltm->tm_year + 1900;
-	
-	//gets the current month (normalised to 0)
-	int month = ltm->tm_mon - 1;
 
-	for (int i = 0; i < 24; i++) {
+	//gets the current month (normalised to 1 based)
+	int month = ltm->tm_mon + 1;
+
+	for (int i = 0; i < noOfMonths; i++) {
 
 		//increases the date of the next timestamp to create
 		month++;
@@ -47,19 +51,31 @@ void Interface::LoadOrders() {
 		//creates a text value of the date for the timestamp to create
 		std::string date = std::to_string(month) + "/" + std::to_string(year);
 
-
 		timeTable.push_back(TimeStamp(date));
-
-		//outputs the most recently entered date
-		//std::cout << timeTable[timeTable.size() - 1].GetDate() << std::endl;
 	}
+}
+
+//Loads up previous orders
+void Interface::LoadOrders() {
 
 	//load orders from a text file (same file location as the exe)
+
+	CreateProgrammaticOrder(4);
+	CreateProgrammaticOrder(3);
+	CreateProgrammaticOrder(6);
+	CreateProgrammaticOrder(4);
+	CreateProgrammaticOrder(1);
+	CreateProgrammaticOrder(2);
+
+}
+
+//creates a programmatic order using the input number
+void Interface::CreateProgrammaticOrder(int val) {
 
 	Order autoGenOrder;
 	int orderNumber;
 
-	orderNumber = 4;
+	orderNumber = val;
 	autoGenOrder.depth = (float)orderNumber;
 	autoGenOrder.length = (float)orderNumber;
 	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
@@ -69,46 +85,6 @@ void Interface::LoadOrders() {
 	autoGenOrder.timeings.end = orderNumber;
 
 	RegisterOrder(autoGenOrder);
-
-
-	orderNumber = 5;
-	autoGenOrder.depth = (float)orderNumber;
-	autoGenOrder.length = (float)orderNumber;
-	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
-	autoGenOrder.name = "Name " + std::to_string(orderNumber);
-
-	autoGenOrder.timeings.start = orderNumber;
-	autoGenOrder.timeings.end = orderNumber;
-
-	RegisterOrder(autoGenOrder);
-
-
-	orderNumber = 5;
-	autoGenOrder.depth = (float)orderNumber;
-	autoGenOrder.length = (float)orderNumber;
-	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
-	autoGenOrder.name = "Name " + std::to_string(orderNumber);
-
-	autoGenOrder.timeings.start = orderNumber;
-	autoGenOrder.timeings.end = orderNumber;
-
-	RegisterOrder(autoGenOrder);
-
-
-	orderNumber = 8;
-	autoGenOrder.depth = (float)orderNumber;
-	autoGenOrder.length = (float)orderNumber;
-	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
-	autoGenOrder.name = "Name " + std::to_string(orderNumber);
-
-	autoGenOrder.timeings.start = orderNumber;
-	autoGenOrder.timeings.end = orderNumber;
-
-	RegisterOrder(autoGenOrder);
-
-
-
-	MainMenu();
 }
 
 //The main menu that the user is presented with
@@ -283,13 +259,13 @@ void Interface::FindTimeIntervals() {
 	std::vector<TimeStampIndexes> foundTimes;
 
 	//loops through each month on the timetable
-	for (size_t i = 0; i < timeTable.size(); i++) {
+	for (int i = 0; i < timeTable.size(); i++) {
 
 		//checks to see if there is enough space in the current start check month's length left
 		if (TimeStamp::MAX_LENGTH - timeTable[i].GetLengthUsed() >= order.length) {
 
 			//loops past the found start month
-			for (size_t j = i + 1; j < timeTable.size(); j++) {
+			for (int j = i + 1; j < timeTable.size(); j++) {
 
 				//checks to see if the current end check month does not have enough space
 				if (TimeStamp::MAX_LENGTH - timeTable[i].GetLengthUsed() < order.length) {
@@ -576,7 +552,7 @@ void Interface::ConfirmEntries() {
 
 			repeat = false;
 
-			RegisterOrder();
+			RegisterOrder(order);
 
 			system("CLS");
 			std::cout << "Payment registered, order added to system" << std::endl << std::endl;
@@ -597,19 +573,6 @@ void Interface::ConfirmEntries() {
 	} while (repeat);
 }
 
-//registers the order that was just made
-void Interface::RegisterOrder() {
-
-	//puts the current order into the list of all orders
-	allOrders.push_back(order);
-
-	//goes through each month that was ordered for
-	for (size_t i = order.timeings.start; i <= order.timeings.end; i++)
-
-		//adjusts the timetable to now account for the new boat length
-		timeTable[i].AdjustLength(order.length);
-}
-
 //registers an order that was made programmatically
 void Interface::RegisterOrder(Order newOrder) {
 
@@ -619,7 +582,7 @@ void Interface::RegisterOrder(Order newOrder) {
 	//goes through each month that was ordered for
 	for (int i = newOrder.timeings.start; i <= newOrder.timeings.end; i++)
 
-		//adjusts the timetable to now account for the new boat length
+		//adjusts the timetable to now account for the new boat length for the current month in the loop
 		timeTable[i].AdjustLength(newOrder.length);
 }
 

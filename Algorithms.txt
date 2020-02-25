@@ -21,5 +21,13 @@ Find out how many months the user can book for by taking the chosen start month 
 Ask the user how many months the want to book for. and then push the interval to the current order.
 
 
-Registering the order times
 
+
+Registering the order times:
+
+Place the order in the list of all orders
+
+Loop through each of the months that the order was for
+for(start;end;++);
+
+In each iteration of the loop, add on the length of the boat to the length left in the marina

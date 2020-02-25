@@ -12,6 +12,8 @@ public:
 	~Interface();
 
 private:
+	void SetupTimeTable(int months);
+	void CreateProgrammaticOrder(int val);
 	void LoadOrders();
 	void MainMenu();
 
@@ -26,7 +28,6 @@ private:
 	void TakeBoatName();
 	void CalculateCosts();
 	void ConfirmEntries();
-	void RegisterOrder();
 	void RegisterOrder(Order newOrder);
 
 	void ShowAllOrders();

@@ -19,3 +19,6 @@ to at the start of the program. The time will be stored in a mm/yyyy format
 cin.get skips, fixed with cin.ignore()
 https://cboard.cprogramming.com/cplusplus-programming/80399-why-doesnt-cin-get-pause-program.html
 
+To get the datetime to work, I had to use <ctime> which tells the date since 1900. This means that 
+the year needs to have 1900 added onto it. The month also needed 1 added to it so that it would be 1 based
+

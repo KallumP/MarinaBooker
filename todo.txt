@@ -1,7 +1,5 @@
 General:
 
-start the date intervals from todays date
-
 make sure that all inputs are number values
 
 add a way to exit the program when in any of the stages
