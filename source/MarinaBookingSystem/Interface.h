@@ -13,8 +13,11 @@ public:
 
 private:
 	void SetupTimeTable(int months);
+	int DateToIndex(std::string date);
+
 	void CreateProgrammaticOrder(int val);
 	void LoadOrders();
+
 	void MainMenu();
 
 	void TakeOrder();
@@ -29,6 +32,7 @@ private:
 	void CalculateCosts();
 	void ConfirmEntries();
 	void RegisterOrder(Order newOrder);
+	void WriteToFile(Order order);
 
 	void ShowAllOrders();
 	void DeleteOrder();
@@ -39,5 +43,7 @@ private:
 	std::vector<TimeStamp> timeTable;
 	std::vector<Order> allOrders;
 	Order order;
+
+	std::string filePath = "order.txt";
 };
 

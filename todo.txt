@@ -10,6 +10,12 @@ When an order is done, it should output an order number
 which will be used for deleting
 
 write to/read from file
+don't reset the file, instead, after the regsiter order method is called, call write to file afterwards
+remove write to file call from register order method
+
+refactor a method that retrieves the index of an input date.
+return -1 if no date was found
+maybe store the start and ends as string aswell as the start and end index
 
 
 

@@ -3,6 +3,7 @@
 #include "Environment.h"
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <ctime>
@@ -55,18 +56,127 @@ void Interface::SetupTimeTable(int noOfMonths) {
 	}
 }
 
+//turns an input date into 
+int Interface::DateToIndex(std::string date) {
+
+	//sets the default index to -1
+	int index = -1;
+
+	//loops through each month in the timetable
+	for (int i = 0; i < timeTable.size(); i++)
+
+		//checks to see if the input date matches the current month's date
+		if (timeTable[i].GetDate() == date) {
+
+			//saves what month was entered
+			index = i;
+
+			//stops searching
+			break;
+		}
+
+	return  index;
+}
+
 //Loads up previous orders
 void Interface::LoadOrders() {
 
-	//load orders from a text file (same file location as the exe)
+	//retrieve all data from the file
 
-	CreateProgrammaticOrder(4);
-	CreateProgrammaticOrder(3);
-	CreateProgrammaticOrder(6);
-	CreateProgrammaticOrder(4);
-	CreateProgrammaticOrder(1);
-	CreateProgrammaticOrder(2);
+	//resets the file
+	std::ofstream toWrite;
+	toWrite.open(filePath);
+	toWrite << "";
+	toWrite.close();
 
+	std::ifstream toRead;
+	toRead.open(filePath);
+
+	std::string line;
+
+	bool repeat = true;
+
+	//load orders from a retrieved data
+	while (repeat) {
+
+		Order newOrder;
+
+		std::getline(toRead, line);
+
+		//checks to see if there was anything left to do in the file
+		if (line != "") {
+
+			//sets the depth
+			newOrder.depth = std::stoi(line);
+
+			//sets the length
+			std::getline(toRead, line);
+			newOrder.length = std::stoi(line);
+
+			//sets the start date
+			std::getline(toRead, line);
+			std::string start = line;
+
+			//sets the end date
+			std::getline(toRead, line);
+			std::string end = line;
+
+			//sets the default end to -1
+			int endIndex = -1;
+
+			//checks to see if the order end is still within the current timetable
+			if (DateToIndex(end) != -1) {
+
+				//sets the end date index
+				newOrder.timeings.end = DateToIndex(end);
+
+				//checks to see if the order start was still within the timetable
+				if (DateToIndex(start) != -1)
+
+					//sets the start date index
+					newOrder.timeings.start = DateToIndex(start);
+				else
+
+					//sets the start to the first month of the timetable
+					newOrder.timeings.start = 0;
+
+			} else {
+
+				//moves onto the next order
+				continue;
+			}
+
+			//sets the name of
+			std::getline(toRead, line);
+			newOrder.name = std::stoi(line);
+
+			//sets the boat name
+			std::getline(toRead, line);
+			newOrder.length = std::stoi(line);
+
+
+
+			//registers the endline
+			std::getline(toRead, line);
+			
+			//gets the next line (ready to check if more needs to be done)
+			std::getline(toRead, line);
+			
+		} else {
+
+			//stops the file search if there was no more lines left
+			repeat = false;
+
+		}
+	}
+
+	//CreateProgrammaticOrder(4);
+	//CreateProgrammaticOrder(3);
+	//CreateProgrammaticOrder(6);
+	//CreateProgrammaticOrder(8);
+	//CreateProgrammaticOrder(4);
+	//CreateProgrammaticOrder(1);
+	//CreateProgrammaticOrder(2);
 }
 
 //creates a programmatic order using the input number
@@ -408,7 +518,7 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 		if (!repeat)
 
 			//loops through each month
-			for (size_t i = chosenInterval.start; i < chosenInterval.end; i++)
+			for (int i = chosenInterval.start; i < chosenInterval.end; i++)
 
 				//checks to see if the input date matches the current month's date
 				if (timeTable[i].GetDate() == input) {
@@ -584,6 +694,26 @@ void Interface::RegisterOrder(Order newOrder) {
 
 		//adjusts the timetable to now account for the new boat length for the current month in the loop
 		timeTable[i].AdjustLength(newOrder.length);
+
+	WriteToFile(newOrder);
+}
+
+//writes an order to the file
+void Interface::WriteToFile(Order order) {
+
+	std::ofstream toWrite;
+
+	toWrite.open(filePath, std::ios_base::app);
+
+	toWrite << order.depth << std::endl;
+	toWrite << order.length << std::endl;
+	toWrite << timeTable[order.timeings.start].GetDate() << std::endl;
+	toWrite << timeTable[order.timeings.end].GetDate() << std::endl;
+	toWrite << order.name << std::endl;
+	toWrite << order.boatName << std::endl;
+	toWrite << "next" << std::endl;
+
+	toWrite.close();
 }
 
 //outputs all the orders
@@ -742,6 +872,8 @@ void Interface::Help() {
 
 	std::cout << "Showing all orders in the console is in the order that the orders came in" << std::endl;
 	std::cout << "To see a chronological order, enter the simulation" << std::endl << std::endl << std::endl;
+
+	std::cout << "Loading an order will remove any order that is out of date (an order that ends before the current date" << std::endl << std::endl << std::endl;
 
 	std::cout << "Press enter to continue" << std::endl;
 	std::cin.ignore();
