@@ -84,16 +84,19 @@ void Interface::LoadOrders() {
 	//retrieve all data from the file
 
 	//resets the file
-	std::ofstream toWrite;
-	toWrite.open(filePath);
-	toWrite << "";
-	toWrite.close();
+	//std::ofstream toWrite;
+	//toWrite.open(filePath);
+	//toWrite << "";
+	//toWrite.close();
 
+	//opens the file to read from
 	std::ifstream toRead;
 	toRead.open(filePath);
 
+	//stores the next line from the text file
 	std::string line;
 
+	//stores whether the read sequence should repeat
 	bool repeat = true;
 
 	//load orders from a retrieved data
@@ -104,9 +107,10 @@ void Interface::LoadOrders() {
 		std::getline(toRead, line);
 
 		//checks to see if there was anything left to do in the file
-		if (line != "") {
+		if (line == "next") {
 
 			//sets the depth
+			std::getline(toRead, line);
 			newOrder.depth = std::stoi(line);
 
 			//sets the length
@@ -117,24 +121,28 @@ void Interface::LoadOrders() {
 			std::getline(toRead, line);
 			std::string start = line;
 
+			//calcluates the start index
+			int startIndex = DateToIndex(start);
+
+
 			//sets the end date
 			std::getline(toRead, line);
 			std::string end = line;
 
-			//sets the default end to -1
-			int endIndex = -1;
+			//calculates the end index
+			int endIndex = DateToIndex(end);
 
 			//checks to see if the order end is still within the current timetable
-			if (DateToIndex(end) != -1) {
+			if (endIndex != -1) {
 
 				//sets the end date index
-				newOrder.timeings.end = DateToIndex(end);
+				newOrder.timeings.end = endIndex;
 
 				//checks to see if the order start was still within the timetable
-				if (DateToIndex(start) != -1)
+				if (startIndex != -1)
 
 					//sets the start date index
-					newOrder.timeings.start = DateToIndex(start);
+					newOrder.timeings.start = startIndex;
 				else
 
 					//sets the start to the first month of the timetable
@@ -148,19 +156,14 @@ void Interface::LoadOrders() {
 
 			//sets the name of
 			std::getline(toRead, line);
-			newOrder.name = std::stoi(line);
+			newOrder.name = line;
 
 			//sets the boat name
 			std::getline(toRead, line);
-			newOrder.length = std::stoi(line);
+			newOrder.boatName = line;
 
-
-
-			//registers the endline
-			std::getline(toRead, line);
-			
-			//gets the next line (ready to check if more needs to be done)
-			std::getline(toRead, line);
+			//registers the order into the program (does not rewrite it to the file)
+			RegisterOrder(newOrder);
 			
 		} else {
 
@@ -195,6 +198,7 @@ void Interface::CreateProgrammaticOrder(int val) {
 	autoGenOrder.timeings.end = orderNumber;
 
 	RegisterOrder(autoGenOrder);
+	WriteToFile(autoGenOrder);
 }
 
 //The main menu that the user is presented with
@@ -664,6 +668,8 @@ void Interface::ConfirmEntries() {
 
 			RegisterOrder(order);
 
+			WriteToFile(order);
+
 			system("CLS");
 			std::cout << "Payment registered, order added to system" << std::endl << std::endl;
 
@@ -694,8 +700,6 @@ void Interface::RegisterOrder(Order newOrder) {
 
 		//adjusts the timetable to now account for the new boat length for the current month in the loop
 		timeTable[i].AdjustLength(newOrder.length);
-
-	WriteToFile(newOrder);
 }
 
 //writes an order to the file
@@ -705,13 +709,15 @@ void Interface::WriteToFile(Order order) {
 
 	toWrite.open(filePath, std::ios_base::app);
 
+	//writes "next" to signify that there is another order
+	toWrite << "next" << std::endl;
+
 	toWrite << order.depth << std::endl;
 	toWrite << order.length << std::endl;
 	toWrite << timeTable[order.timeings.start].GetDate() << std::endl;
 	toWrite << timeTable[order.timeings.end].GetDate() << std::endl;
 	toWrite << order.name << std::endl;
 	toWrite << order.boatName << std::endl;
-	toWrite << "next" << std::endl;
 
 	toWrite.close();
 }
