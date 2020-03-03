@@ -17,6 +17,11 @@ refactor a method that retrieves the index of an input date.
 return -1 if no date was found
 maybe store the start and ends as string aswell as the start and end index
 
+test interval finding
+use up the first few months
+use up the last few months
+use up months in the middle
+
 
 
 Simulation:

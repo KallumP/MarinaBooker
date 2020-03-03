@@ -22,3 +22,9 @@ https://cboard.cprogramming.com/cplusplus-programming/80399-why-doesnt-cin-get-p
 To get the datetime to work, I had to use <ctime> which tells the date since 1900. This means that 
 the year needs to have 1900 added onto it. The month also needed 1 added to it so that it would be 1 based
 
+Interval algorithm, when testing revealed that there were some errors.
+The wrong number was being set as the end number, and if a mid interval was found
+it would not search further to the end if there was no other intervals.
+(The variable holding if the end was found did not get reset, so it wouuld never register the last interval
+if there were intervals already found)
+

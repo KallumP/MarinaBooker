@@ -81,14 +81,6 @@ int Interface::DateToIndex(std::string date) {
 //Loads up previous orders
 void Interface::LoadOrders() {
 
-	//retrieve all data from the file
-
-	//resets the file
-	//std::ofstream toWrite;
-	//toWrite.open(filePath);
-	//toWrite << "";
-	//toWrite.close();
-
 	//opens the file to read from
 	std::ifstream toRead;
 	toRead.open(filePath);
@@ -164,7 +156,7 @@ void Interface::LoadOrders() {
 
 			//registers the order into the program (does not rewrite it to the file)
 			RegisterOrder(newOrder);
-			
+
 		} else {
 
 			//stops the file search if there was no more lines left
@@ -186,16 +178,14 @@ void Interface::LoadOrders() {
 void Interface::CreateProgrammaticOrder(int val) {
 
 	Order autoGenOrder;
-	int orderNumber;
 
-	orderNumber = val;
-	autoGenOrder.depth = (float)orderNumber;
-	autoGenOrder.length = (float)orderNumber;
-	autoGenOrder.boatName = "Boat " + std::to_string(orderNumber);
-	autoGenOrder.name = "Name " + std::to_string(orderNumber);
+	autoGenOrder.depth = (float)val;
+	autoGenOrder.length = (float)val;
+	autoGenOrder.boatName = "Boat " + std::to_string(val);
+	autoGenOrder.name = "Name " + std::to_string(val);
 
-	autoGenOrder.timeings.start = orderNumber;
-	autoGenOrder.timeings.end = orderNumber;
+	autoGenOrder.timeings.start = val;
+	autoGenOrder.timeings.end = val;
 
 	RegisterOrder(autoGenOrder);
 	WriteToFile(autoGenOrder);
@@ -368,7 +358,7 @@ void Interface::TakeLength(int maxLength) {
 //outputs all the available times for a given boat length
 void Interface::FindTimeIntervals() {
 
-	bool endFound = false;
+	bool endFound;
 
 	std::vector<TimeStampIndexes> foundTimes;
 
@@ -378,11 +368,13 @@ void Interface::FindTimeIntervals() {
 		//checks to see if there is enough space in the current start check month's length left
 		if (TimeStamp::MAX_LENGTH - timeTable[i].GetLengthUsed() >= order.length) {
 
+			endFound = false;
+
 			//loops past the found start month
 			for (int j = i + 1; j < timeTable.size(); j++) {
 
 				//checks to see if the current end check month does not have enough space
-				if (TimeStamp::MAX_LENGTH - timeTable[i].GetLengthUsed() < order.length) {
+				if (TimeStamp::MAX_LENGTH - timeTable[j].GetLengthUsed() < order.length) {
 
 					//registers that there was an end month found
 					endFound = true;
@@ -390,22 +382,23 @@ void Interface::FindTimeIntervals() {
 					//adds the found time gap to the list of times
 					foundTimes.push_back(TimeStampIndexes(i, j - 1));
 
-					//sets i to j+1 so that the next set of available days can be found
-					//because the current one is too small
-					i = j + 1;
+					//sets i to j so that the next set of available days can be found
+					//because the current one is too small (i increments at the end)
+					i = j;
 
 					//stops searching for an end (once one was found)
 					break;
 				}
 			}
 
-			//checks to see if an end month was not found
+			//checks to see if an end month was not found (end month search reached the end without finding a month that was too small)
 			if (!endFound) {
 
-				int foundCount = timeTable.size();
+				//saves that the end month would be the last month
+				int foundCount = timeTable.size() - 1;
 
 				//adds on the last month, because it is the final usable date
-				foundTimes.push_back(TimeStampIndexes(i, foundCount - 1));
+				foundTimes.push_back(TimeStampIndexes(i, foundCount));
 
 				//stops searching for start months, as end of the list was reached 
 				break;
@@ -747,7 +740,6 @@ void Interface::ShowAllOrders() {
 //allows the user to delete a user
 void Interface::DeleteOrder() {
 
-
 	std::string boatName;
 	std::string startDate;
 	int dateIndex = -1;
@@ -873,7 +865,7 @@ bool Interface::Exit() {
 void Interface::Help() {
 
 	std::cout << "Once a booking has been made" << std::endl;
-	std::cout << "You can arrive at the start of your month" << std::endl;
+	std::cout << "You can arrive at the start of your start month" << std::endl;
 	std::cout << "You must leave at the end of your end month" << std::endl << std::endl << std::endl;
 
 	std::cout << "Showing all orders in the console is in the order that the orders came in" << std::endl;
