@@ -533,6 +533,7 @@ void Interface::TakeInterval(std::vector<TimeStampIndexes> foundTimes) {
 
 					std::cout << "Please enter the first number from the starting month you want" << std::endl << std::endl;
 
+					//makes the input loop
 					repeat = true;
 
 				} else {
@@ -540,12 +541,13 @@ void Interface::TakeInterval(std::vector<TimeStampIndexes> foundTimes) {
 					//sets the chosen time to be the start time of the chosenIndex (I will set the end time later)
 					chosenInterval = foundTimes[chosenIndex];
 
+					//stops the input from looping
 					repeat = false;
 				}
 
 			} else {
 
-				//makes the loop repeat
+				//makes the input loop
 				repeat = true;
 			}
 
@@ -603,9 +605,16 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 
 			//checks to see if the input was valid
 			if (startingIndex == -1) {
+
+				//registers that a good date was entered
+				repeat = true;
+
+			} else {
+
 				//registers that a good date was entered
 				repeat = false;
 			}
+
 		}
 
 		system("CLS");
@@ -657,22 +666,33 @@ void Interface::TakeEndMonth() {
 		//makes sure that the user entered a numerical input
 		if (NumericalInput()) {
 
-			//sets the end date
-			order.timeings.end = order.timeings.start + input;
 
-			//checks to see if a correct number was inputed
-			if (input < 1 && input >= availableMonths) {
 
-				system("CLS");
+			//checks to see if a correct number was inputed (bigger than 0 and within the available months)
+			if (input > 0 && input <= availableMonths) {
 
-				std::cout << "Please enter a valid number of months" << std::endl << std::endl;
+				//sets the end date
+				order.timeings.end = order.timeings.start + input;
 
-				repeat = true;
+				//stops the input from looping
+				repeat = false;
 
 			} else {
 
-				repeat = false;
+				//clears the screen
+				system("CLS");
+
+				//lets the user know that their input was invalid
+				std::cout << "Please enter a valid number of months" << std::endl << std::endl;
+
+				//makes the input loop
+				repeat = true;
 			}
+
+		} else {
+
+			//makes the input loop
+			repeat = true;
 		}
 
 		//repeats until a valid end month was entered

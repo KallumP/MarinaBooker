@@ -33,3 +33,4 @@ some problems, where the loop that tried to take an input would skip the input p
 still being stored in the cache of std::cin. To combat this, I would use cin.fail() to check if the cin was not able to 
 put the input into the variable (input was not numerical), and then cin.clear() and cin.ignore() to clear the cache
 
+Name testing done to check what happens if the user inputs a \n in their name. This seems to work just fine
