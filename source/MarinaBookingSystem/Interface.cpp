@@ -195,12 +195,14 @@ void Interface::CreateProgrammaticOrder(int val) {
 void Interface::MainMenu() {
 
 	std::string x;
+	int input;
 
 	//variable used to keep track of when to close the app
 	bool exit = false;
 
 	do {
 
+		//tells the user what inputs there are
 		std::cout << "Enter what number you want to do below" << std::endl;
 		std::cout << "1. Create a new order" << std::endl;
 		std::cout << "2. Delete an order" << std::endl;
@@ -209,54 +211,71 @@ void Interface::MainMenu() {
 		std::cout << "5. Exit program" << std::endl;
 		std::cout << "6. Help" << std::endl;
 
-		int input;
+		//takes the input
 		std::cin >> input;
 
-		//checks what the input was
-		switch (input) {
-
-			case  1:
+		//checks to see if the input was not a number
+		if (std::cin.fail()) {
+	
+			//lets the use know to enter a number
 			system("CLS");
-			TakeOrder();
-			break;
+			std::cout << "Please enter a number." << std::endl << std::endl << std::endl;
+
+			//clears the cin cache
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		} else { //the user entered a number
+
+			//checks what the input was
+			switch (input) {
+
+				case 1:
+				system("CLS");
+				TakeOrder();
+				break;
 
 
-			case  2:
-			system("CLS");
-			DeleteOrder();
-			break;
+				case 2:
+				system("CLS");
+				DeleteOrder();
+				break;
 
 
-			case  3:
-			system("CLS");
-			Simulation();
-			break;
+				case  3:
+				system("CLS");
+				Simulation();
+				break;
 
-			case 4:
 
-			system("CLS");
-			ShowAllOrders();
+				case 4:
+				system("CLS");
+				ShowAllOrders();
 
-			std::cout << "Press enter to continue" << std::endl;
-			std::cin.ignore();
-			std::cin.get();
-			system("CLS");
-			break;
+				std::cout << "Press enter to continue" << std::endl;
+				std::cin.ignore();
+				std::cin.get();
+				system("CLS");
+				break;
 
-			case  5:
-			system("CLS");
-			exit = Exit();
-			break;
 
-			case 6:
-			system("CLS");
-			Help();
-			break;
+				case  5:
+				system("CLS");
+				exit = Exit();
+				break;
 
-			default:
-			system("CLS");
-			std::cout << "Please enter one of the numbers shown above." << std::endl << std::endl << std::endl;
-			break;
+
+				case 6:
+				system("CLS");
+				Help();
+				break;
+
+
+				default:
+				system("CLS");
+				std::cout << "Please enter one of the numbers shown above." << std::endl << std::endl << std::endl;
+				break;
+			}
 		}
 
 		//loops until the user tries to exit
