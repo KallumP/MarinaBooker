@@ -12,10 +12,14 @@ public:
 	~Interface();
 
 private:
-	void SetupTimeTable(int months);
-	int DateToIndex(std::string date);
 
+	bool NumericalInput();
+	int DateToIndex(std::string date);
+	void RegisterOrder(Order newOrder);
+	void WriteToFile(Order order);
 	void CreateProgrammaticOrder(int val);
+
+	void SetupTimeTable(int months);
 	void LoadOrders();
 
 	void MainMenu();
@@ -31,8 +35,6 @@ private:
 	void TakeBoatName();
 	void CalculateCosts();
 	void ConfirmEntries();
-	void RegisterOrder(Order newOrder);
-	void WriteToFile(Order order);
 
 	void ShowAllOrders();
 	void DeleteOrder();

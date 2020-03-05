@@ -16,7 +16,12 @@ use up the first few months
 use up the last few months
 use up months in the middle
 
-
+change the check for numerical inputs to a method, that returns true,
+or outputs the error messages, clears the cin cache
+the if statement that calls the method for it's condition
+only needs to have the if, and no else (because the else will happen 
+in the check method before it returns false)
+check first month date random string input
 
 Simulation:
 

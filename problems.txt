@@ -28,3 +28,8 @@ it would not search further to the end if there was no other intervals.
 (The variable holding if the end was found did not get reset, so it wouuld never register the last interval
 if there were intervals already found)
 
+When taking a number input, I wanted to make sure that the input was numerical. A few of the methods I used led to
+some problems, where the loop that tried to take an input would skip the input part. This was due to the \n special character
+still being stored in the cache of std::cin. To combat this, I would use cin.fail() to check if the cin was not able to 
+put the input into the variable (input was not numerical), and then cin.clear() and cin.ignore() to clear the cache
+

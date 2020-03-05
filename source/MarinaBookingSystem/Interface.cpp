@@ -24,6 +24,101 @@ Interface::~Interface() {
 
 }
 
+//checks is the last input was numerical (true = numerical input)
+bool Interface::NumericalInput() {
+
+	//checks to see if the input was not a number
+	if (std::cin.fail()) {
+
+		//lets the use know to enter a number
+		system("CLS");
+		std::cout << "Please enter a number." << std::endl << std::endl << std::endl;
+
+		//clears the cin cache
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		return false;
+
+	} else {
+
+		return true;
+	}
+}
+
+//turns an input date into 
+int Interface::DateToIndex(std::string date) {
+
+	//sets the default index to -1
+	int index = -1;
+
+	//loops through each month in the timetable
+	for (int i = 0; i < timeTable.size(); i++) {
+
+		//checks to see if the input date matches the current month's date
+		if (timeTable[i].GetDate() == date) {
+
+			//saves what month was entered
+			index = i;
+
+			//stops searching
+			break;
+		}
+	}
+
+	return  index;
+}
+
+//registers an order that was made programmatically
+void Interface::RegisterOrder(Order newOrder) {
+
+	//puts the current order into the list of all orders
+	allOrders.push_back(newOrder);
+
+	//goes through each month that was ordered for
+	for (int i = newOrder.timeings.start; i <= newOrder.timeings.end; i++)
+
+		//adjusts the timetable to now account for the new boat length for the current month in the loop
+		timeTable[i].AdjustLength(newOrder.length);
+}
+
+//writes an order to the file
+void Interface::WriteToFile(Order order) {
+
+	std::ofstream toWrite;
+
+	toWrite.open(filePath, std::ios_base::app);
+
+	//writes "next" to signify that there is another order
+	toWrite << "next" << std::endl;
+
+	toWrite << order.depth << std::endl;
+	toWrite << order.length << std::endl;
+	toWrite << timeTable[order.timeings.start].GetDate() << std::endl;
+	toWrite << timeTable[order.timeings.end].GetDate() << std::endl;
+	toWrite << order.name << std::endl;
+	toWrite << order.boatName << std::endl;
+
+	toWrite.close();
+}
+
+//creates a programmatic order using the input number
+void Interface::CreateProgrammaticOrder(int val) {
+
+	Order autoGenOrder;
+
+	autoGenOrder.depth = (float)val;
+	autoGenOrder.length = (float)val;
+	autoGenOrder.boatName = "Boat " + std::to_string(val);
+	autoGenOrder.name = "Name " + std::to_string(val);
+
+	autoGenOrder.timeings.start = val;
+	autoGenOrder.timeings.end = val;
+
+	RegisterOrder(autoGenOrder);
+	WriteToFile(autoGenOrder);
+}
+
 //sets up the timetable to reach a certain number of months from the next month from today
 void Interface::SetupTimeTable(int noOfMonths) {
 
@@ -54,28 +149,6 @@ void Interface::SetupTimeTable(int noOfMonths) {
 
 		timeTable.push_back(TimeStamp(date));
 	}
-}
-
-//turns an input date into 
-int Interface::DateToIndex(std::string date) {
-
-	//sets the default index to -1
-	int index = -1;
-
-	//loops through each month in the timetable
-	for (int i = 0; i < timeTable.size(); i++)
-
-		//checks to see if the input date matches the current month's date
-		if (timeTable[i].GetDate() == date) {
-
-			//saves what month was entered
-			index = i;
-
-			//stops searching
-			break;
-		}
-
-	return  index;
 }
 
 //Loads up previous orders
@@ -131,14 +204,15 @@ void Interface::LoadOrders() {
 				newOrder.timeings.end = endIndex;
 
 				//checks to see if the order start was still within the timetable
-				if (startIndex != -1)
+				if (startIndex != -1) {
 
 					//sets the start date index
 					newOrder.timeings.start = startIndex;
-				else
+				} else {
 
 					//sets the start to the first month of the timetable
 					newOrder.timeings.start = 0;
+				}
 
 			} else {
 
@@ -174,27 +248,9 @@ void Interface::LoadOrders() {
 	//CreateProgrammaticOrder(2);
 }
 
-//creates a programmatic order using the input number
-void Interface::CreateProgrammaticOrder(int val) {
-
-	Order autoGenOrder;
-
-	autoGenOrder.depth = (float)val;
-	autoGenOrder.length = (float)val;
-	autoGenOrder.boatName = "Boat " + std::to_string(val);
-	autoGenOrder.name = "Name " + std::to_string(val);
-
-	autoGenOrder.timeings.start = val;
-	autoGenOrder.timeings.end = val;
-
-	RegisterOrder(autoGenOrder);
-	WriteToFile(autoGenOrder);
-}
-
 //The main menu that the user is presented with
 void Interface::MainMenu() {
 
-	std::string x;
 	int input;
 
 	//variable used to keep track of when to close the app
@@ -214,18 +270,8 @@ void Interface::MainMenu() {
 		//takes the input
 		std::cin >> input;
 
-		//checks to see if the input was not a number
-		if (std::cin.fail()) {
-	
-			//lets the use know to enter a number
-			system("CLS");
-			std::cout << "Please enter a number." << std::endl << std::endl << std::endl;
-
-			//clears the cin cache
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-		} else { //the user entered a number
+		//makes sure that the user entered a numerical input
+		if (NumericalInput()) {
 
 			//checks what the input was
 			switch (input) {
@@ -325,20 +371,26 @@ void Interface::TakeDepth(int maxDepth) {
 
 	//gets the depth of the boat being ordered for
 	do {
+
 		std::cout << "Enter the depth of the boat: ";
 
+		//takes the input
 		std::cin >> input;
 		std::cout << std::endl;
 
-		//checks to see if the input was within the bounds
-		if (input <= maxDepth && input > 0)
-			order.depth = input;
-		else if (input > maxDepth) {
-			system("CLS");
-			std::cout << "This entry was too big (boat must be less than " << maxDepth << " meters deep" << std::endl;
-		} else if (input <= 0) {
-			system("CLS");
-			std::cout << "A boat cannot be smaller than 0 meters deep!" << std::endl;
+		//makes sure that the user entered a numerical input
+		if (NumericalInput()) {
+
+			//checks to see if the input was within the bounds
+			if (input <= maxDepth && input > 0) {
+				order.depth = input;
+			} else if (input > maxDepth) {
+				system("CLS");
+				std::cout << "This entry was too big (boat must be less than " << maxDepth << " meters deep" << std::endl;
+			} else if (input <= 0) {
+				system("CLS");
+				std::cout << "A boat cannot be smaller than 0 meters deep!" << std::endl;
+			}
 		}
 
 	} while (input > maxDepth || input <= 0);
@@ -347,7 +399,7 @@ void Interface::TakeDepth(int maxDepth) {
 //takes the user input for the boat length
 void Interface::TakeLength(int maxLength) {
 
-	float input;
+	float input = -1;
 
 	//loops until a valid length was inputted
 	do {
@@ -360,15 +412,19 @@ void Interface::TakeLength(int maxLength) {
 		std::cin >> input;
 		std::cout << std::endl;
 
-		//checks to see if the input was within the bounds
-		if (input <= maxLength && input > 0)
-			order.length = input;
-		else if (input > maxLength) {
-			system("CLS");
-			std::cout << "This entry was too big (the boat must be less than " << maxLength << " meteres long" << std::endl;
-		} else if (input <= 0) {
-			system("CLS");
-			std::cout << "A boat cannot be less than 0 meters long!" << std::endl;
+		//makes sure that the user entered a numerical input
+		if (NumericalInput()) {
+
+			//checks to see if the input was within the bounds
+			if (input <= maxLength && input > 0) {
+				order.length = input;
+			} else if (input > maxLength) {
+				system("CLS");
+				std::cout << "This entry was too big (the boat must be less than " << maxLength << " meteres long" << std::endl;
+			} else if (input <= 0) {
+				system("CLS");
+				std::cout << "A boat cannot be less than 0 meters long!" << std::endl;
+			}
 		}
 
 	} while (input > maxLength || input <= 0);
@@ -450,7 +506,7 @@ void Interface::TakeInterval(std::vector<TimeStampIndexes> foundTimes) {
 
 			std::cout << "Below is a list of all the times that you can book. " << std::endl;
 
-			for (size_t i = 0; i < foundTimes.size(); i++) {
+			for (int i = 0; i < foundTimes.size(); i++) {
 
 				//outputs what month was found
 				std::cout << i + 1 << ". " << timeTable[foundTimes[i].start].GetDate() << " until ";
@@ -464,26 +520,33 @@ void Interface::TakeInterval(std::vector<TimeStampIndexes> foundTimes) {
 			//takes an input
 			std::cin >> chosenIndex;
 
-			//sets the normalises the input to be zero based
-			chosenIndex--;
+			//makes sure that the user entered a numerical input
+			if (NumericalInput()) {
 
+				//sets the normalises the input to be zero based
+				chosenIndex--;
 
-			//checks to see if the input was wrong
-			if (chosenIndex < 0 || chosenIndex >= foundTimes.size()) {
+				//checks to see if the input was wrong
+				if (chosenIndex < 0 || chosenIndex >= foundTimes.size()) {
 
-				system("CLS");
+					system("CLS");
 
-				std::cout << "Please enter the first number from the starting month you want" << std::endl << std::endl;
+					std::cout << "Please enter the first number from the starting month you want" << std::endl << std::endl;
 
-				repeat = true;
+					repeat = true;
+
+				} else {
+
+					//sets the chosen time to be the start time of the chosenIndex (I will set the end time later)
+					chosenInterval = foundTimes[chosenIndex];
+
+					repeat = false;
+				}
 
 			} else {
 
-
-				//sets the chosen time to be the start time of the chosenIndex (I will set the end time later)
-				chosenInterval = foundTimes[chosenIndex];
-
-				repeat = false;
+				//makes the loop repeat
+				repeat = true;
 			}
 
 		} while (repeat);
@@ -520,9 +583,11 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 			repeat = false;
 
 			//checks to see if the first number was a "0"
-			if (input.substr(0, 1) == "0")
+			if (input.substr(0, 1) == "0") {
 
+				//sets the input to the input without the first 0
 				input = input.substr(1, input.length() - 1);
+			}
 
 		} else {
 
@@ -531,23 +596,17 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 		}
 
 		//checks to see if there was a bad input (too short to be in a date format)
-		if (!repeat)
+		if (!repeat) {
 
-			//loops through each month
-			for (int i = chosenInterval.start; i < chosenInterval.end; i++)
+			//turns the input date into a time table index
+			startingIndex = DateToIndex(input);
 
-				//checks to see if the input date matches the current month's date
-				if (timeTable[i].GetDate() == input) {
-
-					//registers that a good date was entered
-					repeat = false;
-
-					//saves what month was entered
-					startingIndex = i;
-
-					//stops searching
-					break;
-				}
+			//checks to see if the input was valid
+			if (startingIndex == -1) {
+				//registers that a good date was entered
+				repeat = false;
+			}
+		}
 
 		system("CLS");
 
@@ -595,21 +654,25 @@ void Interface::TakeEndMonth() {
 		//gets the input
 		std::cin >> input;
 
-		//sets the end date
-		order.timeings.end = order.timeings.start + input;
+		//makes sure that the user entered a numerical input
+		if (NumericalInput()) {
 
-		//checks to see if a correct number was inputed
-		if (input < 1 && input >= availableMonths) {
+			//sets the end date
+			order.timeings.end = order.timeings.start + input;
 
-			system("CLS");
+			//checks to see if a correct number was inputed
+			if (input < 1 && input >= availableMonths) {
 
-			std::cout << "Please enter a valid number of months" << std::endl << std::endl;
+				system("CLS");
 
-			repeat = true;
-		} else {
+				std::cout << "Please enter a valid number of months" << std::endl << std::endl;
 
-			repeat = false;
+				repeat = true;
 
+			} else {
+
+				repeat = false;
+			}
 		}
 
 		//repeats until a valid end month was entered
@@ -701,39 +764,6 @@ void Interface::ConfirmEntries() {
 	} while (repeat);
 }
 
-//registers an order that was made programmatically
-void Interface::RegisterOrder(Order newOrder) {
-
-	//puts the current order into the list of all orders
-	allOrders.push_back(newOrder);
-
-	//goes through each month that was ordered for
-	for (int i = newOrder.timeings.start; i <= newOrder.timeings.end; i++)
-
-		//adjusts the timetable to now account for the new boat length for the current month in the loop
-		timeTable[i].AdjustLength(newOrder.length);
-}
-
-//writes an order to the file
-void Interface::WriteToFile(Order order) {
-
-	std::ofstream toWrite;
-
-	toWrite.open(filePath, std::ios_base::app);
-
-	//writes "next" to signify that there is another order
-	toWrite << "next" << std::endl;
-
-	toWrite << order.depth << std::endl;
-	toWrite << order.length << std::endl;
-	toWrite << timeTable[order.timeings.start].GetDate() << std::endl;
-	toWrite << timeTable[order.timeings.end].GetDate() << std::endl;
-	toWrite << order.name << std::endl;
-	toWrite << order.boatName << std::endl;
-
-	toWrite.close();
-}
-
 //outputs all the orders
 void Interface::ShowAllOrders() {
 
@@ -741,7 +771,7 @@ void Interface::ShowAllOrders() {
 	if (allOrders.size() != 0)
 
 		//loops through each order
-		for (size_t i = 0; i < allOrders.size(); i++) {
+		for (int i = 0; i < allOrders.size(); i++) {
 
 			//outputs the vital info about each order
 			std::cout << allOrders[i].name << std::endl;
@@ -775,7 +805,7 @@ void Interface::DeleteOrder() {
 	std::cin >> startDate;
 
 	//loops through the timetable
-	for (size_t i = 0; i < timeTable.size(); i++) {
+	for (int i = 0; i < timeTable.size(); i++) {
 
 		//checks to see if the date was the same as the input
 		if (timeTable[i].GetDate() == startDate) {
@@ -794,7 +824,7 @@ void Interface::DeleteOrder() {
 		int orderIndex = -1;
 
 		//loops through the orders
-		for (size_t i = 0; i < allOrders.size(); i++) {
+		for (int i = 0; i < allOrders.size(); i++) {
 
 			//TODO checks if the order id is the same
 
