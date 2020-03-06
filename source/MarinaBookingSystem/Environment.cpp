@@ -8,6 +8,7 @@ Environment::Environment(std::vector<Order> allOrders) {
 
 	marina = Marina();
 	SetupBoatEntryOrder(allOrders);
+	//Loop();
 }
 
 Environment::~Environment() {
@@ -31,9 +32,10 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 			allOrders[i].timeings.end,
 			allOrders[i].boatName)));
 
-	//outputs the linked list
-	spawnOrder.OutputBoats(true);
-	spawnOrder.OutputBoats(false);
+	//allows the loop to start working
+	run = true;
+
+	TestAllDeletes();
 
 	std::cout << "Press enter to continue" << std::endl;
 	std::cin.ignore(); 
@@ -44,7 +46,12 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 
 void Environment::Loop() {
 
-	while (running) {
+	//clears the screen
+	system("CLS");
+
+	while (run) {
+
+		std::cin.get();
 
 	}
 }
@@ -54,5 +61,29 @@ void Environment::Proccess() {
 }
 
 void Environment::Draw() {
+
+}
+
+void Environment::TestAllDeletes() {
+
+	spawnOrder.OutputBoats(true);
+	std::cin.ignore();
+	std::cin.get();
+
+	spawnOrder.DeleteItem(spawnOrder.start);
+	spawnOrder.OutputBoats(true);
+	std::cin.get();
+
+	spawnOrder.DeleteItem(&spawnOrder.boatSpawnOrder[2]);
+	spawnOrder.OutputBoats(true);
+	std::cin.get();
+
+	spawnOrder.DeleteItem(spawnOrder.end);
+	spawnOrder.OutputBoats(true);
+	std::cin.get();
+
+	spawnOrder.DeleteItem(spawnOrder.end);
+	spawnOrder.OutputBoats(true);
+	std::cin.get();
 
 }

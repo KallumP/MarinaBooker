@@ -12,9 +12,13 @@ store the start and ends in the order as string aswell as the start and end inde
 test interval finding
 use up the first few months
 use up the last few months
-use up months in the middle
+use up multiple months in the middle
+use one 150m length boat to fill up a month
+
 
 Simulation:
+
+set ListItems vector back to private (after testing deletes)
 
 Remove boats all boats that need to leave, before adding any new boats
 

@@ -1,63 +1,28 @@
 next
-4
-4
-8/2020
-8/2020
-Name 4
-Boat 4
-next
-3
-3
-7/2020
-7/2020
-Name 3
-Boat 3
-next
-6
-6
-10/2020
-10/2020
-Name 6
-Boat 6
-next
-8
-8
-12/2020
-12/2020
-Name 8
-Boat 8
-next
-4
-4
-8/2020
-8/2020
-Name 4
-Boat 4
-next
 1
 1
 5/2020
 5/2020
+Name 0
+Boat 0
+next
+1
+1
+6/2020
+6/2020
 Name 1
 Boat 1
 next
-2
-2
-6/2020
-6/2020
+1
+1
+7/2020
+7/2020
 Name 2
 Boat 2
 next
 1
 1
-4/2020
-3/2022
-\n
-asdfa
-next
-1
-1
-8/2021
-11/2021
-Kallum P
-Kallum's Boat
+8/2020
+8/2020
+Name 3
+Boat 3

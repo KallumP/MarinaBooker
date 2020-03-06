@@ -21,7 +21,7 @@ public:
 
 	void OutputBoats(bool forward);
 
-private:
+//private:
 
 	std::vector<ListItem> boatSpawnOrder;
 	int vectorInsert;

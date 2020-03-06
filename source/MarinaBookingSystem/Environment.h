@@ -21,9 +21,11 @@ private:
 	void Proccess();
 	void Draw();
 
+	void TestAllDeletes();
+
 	Marina marina;
 	LinkedList spawnOrder;
 
-	bool running;
+	bool run;
 };
 

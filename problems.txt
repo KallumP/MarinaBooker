@@ -32,5 +32,12 @@ When taking a number input, I wanted to make sure that the input was numerical. 
 some problems, where the loop that tried to take an input would skip the input part. This was due to the \n special character
 still being stored in the cache of std::cin. To combat this, I would use cin.fail() to check if the cin was not able to 
 put the input into the variable (input was not numerical), and then cin.clear() and cin.ignore() to clear the cache
+https://stackoverflow.com/questions/5655142/how-to-check-if-input-is-numeric-in-c
 
 Name testing done to check what happens if the user inputs a \n in their name. This seems to work just fine
+
+Testing the deletion in the linked list went as follows
+I put in boats that were in order. The order that the boats enter the marina was: 0,1,2,3 
+Then I delete the boats one by one in the order: 0,2,3,1
+This helps me test the deletion of "The first item", "A middle item", "The last item", "The only item in the list"
+Insertion used a similar testing technique "Only item", "First Item", "Last item", "Middle item"

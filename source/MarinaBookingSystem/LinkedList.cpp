@@ -32,7 +32,7 @@ void LinkedList::AddItem(ListItem newItem) {
 	//starts the sort sequence
 	SortItem(&boatSpawnOrder[vectorInsert], start);
 
-	//updates the insert position
+	//increments the insert position
 	vectorInsert++;
 }
 
@@ -126,27 +126,44 @@ void LinkedList::InsertLastLocation(ListItem* newItem, ListItem* prev) {
 //goes through the deleting protocol
 void LinkedList::DeleteItem(ListItem* toRemove) {
 
-	//checks to see if this was the first item
-	if (toRemove->GetPrevPointer() == nullptr) {
+	//checks to see if the passed item existed
+	if (toRemove != nullptr) {
 
-		//sets the start to the next item
-		start = toRemove->GetNextPointer();
+		//checks to see if this was the only item in the linked list
+		if (toRemove->GetPrevPointer() == nullptr && toRemove->GetNextPointer() == nullptr) {
 
-		//sets the next item's previous item to the current item's previous item
-		toRemove->GetNextPointer()->SetPrevPointer(toRemove->GetPrevPointer());
-	}
+			//sets the start of the linked list to the next item
+			start = nullptr;
 
-	//loops through all the orders
-	for (int i = 0; i < boatSpawnOrder.size(); i++) {
+			//sets the end of the linked list to the previous item
+			end = nullptr;
 
-		//checks to see if the address of the toRemove is the same as the current loop one
-		if (&boatSpawnOrder[i] == toRemove) {
+			//checks to see if this was the first item in the linked list
+		} else if (toRemove->GetPrevPointer() == nullptr) {
 
-			//deletes the order
-			boatSpawnOrder.erase(boatSpawnOrder.begin() + i);
+			//sets the start of the linked list to the next item
+			start = toRemove->GetNextPointer();
 
-			//stops searching
-			break;
+			//sets the next item's prev item to the current item's prev item
+			toRemove->GetNextPointer()->SetPrevPointer(nullptr);
+
+			//checks to see if this was the last item in the linked list
+		} else if (toRemove->GetNextPointer() == nullptr) {
+
+			//sets the end of the linked list to the previous item
+			end = toRemove->GetPrevPointer();
+
+			//sets the prev item's next item to the current item's next item
+			toRemove->GetPrevPointer()->SetNextPointer(nullptr);
+
+			//the item is in the middle of the linked list
+		} else {
+
+			//sets the next item's prev item to the current item's prev item
+			toRemove->GetNextPointer()->SetPrevPointer(toRemove->GetPrevPointer());
+
+			//sets the prev item's next item to the current item's next item
+			toRemove->GetPrevPointer()->SetNextPointer(toRemove->GetNextPointer());
 		}
 	}
 }
@@ -167,7 +184,7 @@ void LinkedList::OutputBoats(bool forward) {
 
 
 		//keeps traversing until there are no more list items left
-		while (next != nullptr){
+		while (next != nullptr) {
 
 			//outputs the name and the entry time of the current item's boat
 			std::cout << "Boat: " << next->GetBoat().GetName() << " will be entering at: " << next->GetBoat().GetEnter() << std::endl;
@@ -177,10 +194,10 @@ void LinkedList::OutputBoats(bool forward) {
 		}
 
 		std::cout << std::endl << std::endl << std::endl;
-			
+
 
 	} else if (!forward && end != nullptr) {
-		
+
 		//sets the traversal at the end of the list
 		next = end;
 
