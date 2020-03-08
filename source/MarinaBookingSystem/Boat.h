@@ -9,6 +9,7 @@ public:
 	~Boat();
 
 	int GetEnter();
+	int GetLeave();
 	std::string GetName();
 
 	void Leave(bool comeBack);

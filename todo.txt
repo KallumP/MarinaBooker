@@ -15,10 +15,19 @@ use up the last few months
 use up multiple months in the middle
 use one 150m length boat to fill up a month
 
+Turn the date to index method into a static one in the timestamp class
+
+comment the testAllDelete method
+
 
 Simulation:
 
 set ListItems vector back to private (after testing deletes)
+
+use a linked list to store the marina boats
+make a new traversal (within the new month method), that goes through each boat
+how can I do this by adding new boats into the linked list (more than the first instantiation takes)
+watch a video on c++ linked list implementation
 
 Remove boats all boats that need to leave, before adding any new boats
 

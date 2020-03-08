@@ -899,7 +899,7 @@ void Interface::DeleteOrder() {
 void Interface::Simulation() {
 
 	//makes the environement for the simulation
-	Environment e = Environment(allOrders);
+	Environment e = Environment(allOrders, timeTable.size());
 }
 
 //the exit sequence
@@ -940,7 +940,7 @@ void Interface::Help() {
 	std::cout << "Showing all orders in the console is in the order that the orders came in" << std::endl;
 	std::cout << "To see a chronological order, enter the simulation" << std::endl << std::endl << std::endl;
 
-	std::cout << "Loading an order will remove any order that is out of date (an order that ends before the current date" << std::endl << std::endl << std::endl;
+	std::cout << "Loading an order from the text file will remove any order \nthat is out of date (an order that ends before the current date)" << std::endl << std::endl << std::endl;
 
 	std::cout << "Press enter to continue" << std::endl;
 	std::cin.ignore();

@@ -31,3 +31,24 @@ Loop through each of the months that the order was for
 for(start;end;++);
 
 In each iteration of the loop, add on the length of the boat to the length left in the marina
+
+
+
+
+Simulation:
+
+The environment will hold the time, the marina, and the spawnOrder
+
+The marina will take new boats, and deal with the boats within.
+
+On each new month, the marina will check what boats need to leave.
+
+On each leaveBoat, all boats infront need to be put in hold.
+
+The marina should check from the start of the marina, and make each go to the hold
+
+until the boat being checked is the boat that must leave.
+
+keep checking to see what boats need to leave.
+
+When the end of the marinaBoats has been checked, all the hold boats can be sent back to the marina

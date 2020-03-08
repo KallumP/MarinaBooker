@@ -12,7 +12,7 @@ class Environment {
 public:
 
 	Environment();
-	Environment(std::vector<Order> allOrders);
+	Environment(std::vector<Order> allOrders, int simLength);
 	~Environment();
 
 private:
@@ -23,8 +23,11 @@ private:
 
 	void TestAllDeletes();
 
-	Marina marina;
 	LinkedList spawnOrder;
+	Marina marina;
+
+	int currentMonth;
+	int maxMonth;
 
 	bool run;
 };

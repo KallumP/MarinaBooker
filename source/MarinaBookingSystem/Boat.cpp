@@ -23,6 +23,10 @@ int Boat::GetEnter() {
 	return entryMonth;
 }
 
+int Boat::GetLeave() {
+	return leaveMonth;
+}
+
 std::string Boat::GetName() {
 	return name;
 }
