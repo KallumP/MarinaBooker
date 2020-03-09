@@ -14,22 +14,22 @@ public:
 private:
 
 	bool NumericalInput();
-	int DateToIndex(std::string date);
-	void RegisterOrder(Order newOrder);
-	void WriteToFile(Order order);
-	void CreateProgrammaticOrder(int val);
+	int DateToIndex(std::string);
+	void RegisterOrder(Order);
+	void WriteToFile(Order);
+	void CreateProgrammaticOrder(int);
 
-	void SetupTimeTable(int months);
+	void SetupTimeTable(int);
 	void LoadOrders();
 
 	void MainMenu();
 
 	void TakeOrder();
-	void TakeDepth(int minDepth);
-	void TakeLength(int minDepth);
+	void TakeDepth(int);
+	void TakeLength(int);
 	void FindTimeIntervals();
-	void TakeInterval(std::vector<TimeStampIndexes> foundTimes);
-	void TakeStartMonth(TimeStampIndexes chosenInterval);
+	void TakeInterval(std::vector<TimeStampIndexes>);
+	void TakeStartMonth(TimeStampIndexes);
 	void TakeEndMonth();
 	void TakeUserName();
 	void TakeBoatName();

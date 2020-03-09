@@ -10,7 +10,7 @@ Environment::Environment(std::vector<Order> allOrders, int simLength) {
 	currentMonth = 0;
 	maxMonth = simLength;
 	SetupBoatEntryOrder(allOrders);
-	//Loop();
+	Loop();
 }
 
 Environment::~Environment() {
@@ -53,8 +53,12 @@ void Environment::Loop() {
 
 	while (run) {
 
+
+		marina.NextMonth(currentMonth);
+
+
 		//loops if the first boat in the linked list needs to enter the marina
-		while (spawnOrder.start->GetBoat().GetEnter() == currentMonth) {
+		while (spawnOrder.start != nullptr && spawnOrder.start->GetBoat().GetEnter() == currentMonth) {
 
 			//spawns the first boat from the linked list into the marina
 			marina.SpawnBoat(spawnOrder.start->GetBoat());
@@ -64,17 +68,19 @@ void Environment::Loop() {
 		}
 
 
-
+		std::cout << "Press any button to enter the next month" <<std::endl;
 		std::cin.get();
+		system("CLS");
 
 		currentMonth++;
 
 		//checks to see if the simulation should stop
 		if (currentMonth >= maxMonth)
 			run = false;
-
 	}
 
+	std::cout << "Thats the end of the simulation" << std::endl;
+	std::cout << "Press any button to enter the next month" << std::endl;
 	std::cin.get();
 }
 

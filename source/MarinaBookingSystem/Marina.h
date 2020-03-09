@@ -12,13 +12,14 @@ public:
 	Marina();
 	~Marina();
 
-	void SpawnBoat(Boat toSpawn); 
-	void NextMonth(int newMonth);
+	void SpawnBoat(Boat);
+	void NextMonth(int);
 
 private:
-	
-	void RemoveBoat(Boat toRemove);
+
+	void RemoveBoat(int, bool);
 	void ReturnAllHoldBoats();
+	void Draw();
 
 	std::vector<Boat> marinaBoats;
 	std::vector<Boat> holdingBoats;

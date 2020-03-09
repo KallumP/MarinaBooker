@@ -22,16 +22,6 @@ comment the testAllDelete method
 
 Simulation:
 
-set ListItems vector back to private (after testing deletes)
-
-use a linked list to store the marina boats
-make a new traversal (within the new month method), that goes through each boat
-how can I do this by adding new boats into the linked list (more than the first instantiation takes)
-watch a video on c++ linked list implementation
-
-Remove boats all boats that need to leave, before adding any new boats
+set ListItems attributes back to private (after testing deletes)
 
 Output the length left per month
-
-Have LinkedList.AddItem() take in a boat, and in that method, push back a new ListItem(passed in boat)
-this is for memory management

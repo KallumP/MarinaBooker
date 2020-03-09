@@ -6,10 +6,10 @@ class TimeStamp {
 
 public:
 	TimeStamp();
-	TimeStamp(std::string _date);
+	TimeStamp(std::string);
 	~TimeStamp();
 
-	void AdjustLength(float newLength);
+	void AdjustLength(float);
 	float GetLengthUsed();
 	std::string GetDate();
 

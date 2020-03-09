@@ -12,11 +12,11 @@ class Environment {
 public:
 
 	Environment();
-	Environment(std::vector<Order> allOrders, int simLength);
+	Environment(std::vector<Order>, int);
 	~Environment();
 
 private:
-	void SetupBoatEntryOrder(std::vector<Order> allOrders);
+	void SetupBoatEntryOrder(std::vector<Order>);
 	void Loop();
 	void Proccess();
 	void Draw();

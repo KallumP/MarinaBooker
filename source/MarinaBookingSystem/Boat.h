@@ -5,14 +5,14 @@ class Boat {
 
 public:
 	Boat();
-	Boat(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name);
+	Boat(float, float, int, int, std::string);
 	~Boat();
 
 	int GetEnter();
 	int GetLeave();
 	std::string GetName();
 
-	void Leave(bool comeBack);
+	void Leave(bool);
 	void Return();
 
 private:

@@ -3,14 +3,14 @@
 
 class ListItem {
 
-public: 
+public:
 
-	
+
 	ListItem();
-	ListItem(Boat _boat);
+	ListItem(Boat);
 
-	void SetNextPointer(ListItem* next);
-	void SetPrevPointer(ListItem* next);
+	void SetNextPointer(ListItem*);
+	void SetPrevPointer(ListItem*);
 	ListItem* GetPrevPointer();
 	ListItem* GetNextPointer();
 

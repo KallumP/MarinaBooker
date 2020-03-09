@@ -8,20 +8,20 @@ class LinkedList {
 public:
 
 	LinkedList();
-	LinkedList(int size);
+	LinkedList(int);
 
-	void AddItem(ListItem newItem);
-	void SortItem(ListItem* toAdd, ListItem* current);
-	void InsertFirstItem(ListItem* toAdd);
-	void InsertFirstLocation(ListItem* newItem, ListItem* next);
-	void InsertCenterLocation(ListItem* toAdd, ListItem* prev, ListItem* next);
-	void InsertLastLocation(ListItem* toAdd, ListItem* prev);
+	void AddItem(ListItem);
+	void SortItem(ListItem*, ListItem*);
+	void InsertFirstItem(ListItem*);
+	void InsertFirstLocation(ListItem*, ListItem*);
+	void InsertCenterLocation(ListItem*, ListItem*, ListItem*);
+	void InsertLastLocation(ListItem*, ListItem*);
 
-	void DeleteItem(ListItem* toRemove);
+	void DeleteItem(ListItem*);
 
-	void OutputBoats(bool forward);
+	void OutputBoats(bool);
 
-//private:
+	//private:
 
 	std::vector<ListItem> boatSpawnOrder;
 	int vectorInsert;
