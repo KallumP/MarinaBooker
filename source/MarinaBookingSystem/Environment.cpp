@@ -17,7 +17,6 @@ Environment::~Environment() {
 
 }
 
-
 void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 
 	//instantiates the linked list
@@ -36,14 +35,6 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 
 	//allows the loop to start working
 	run = true;
-
-	//TestAllDeletes();
-
-	//std::cout << "Press enter to continue" << std::endl;
-	//std::cin.ignore(); 
-	//std::cin.get();
-
-	//system("CLS");
 }
 
 void Environment::Loop() {
@@ -51,11 +42,12 @@ void Environment::Loop() {
 	//clears the screen
 	system("CLS");
 
+	std::cin.ignore();
+
 	while (run) {
 
-
+		//sends an update with the new month to the marina
 		marina.NextMonth(currentMonth);
-
 
 		//loops if the first boat in the linked list needs to enter the marina
 		while (spawnOrder.start != nullptr && spawnOrder.start->GetBoat().GetEnter() == currentMonth) {
@@ -67,8 +59,8 @@ void Environment::Loop() {
 			spawnOrder.DeleteItem(spawnOrder.start);
 		}
 
-
-		std::cout << "Press any button to enter the next month" <<std::endl;
+		//lets the user proceed into the next month on their own time
+		std::cout << std::endl << "Press any button to enter the next month" <<std::endl;
 		std::cin.get();
 		system("CLS");
 
@@ -77,74 +69,42 @@ void Environment::Loop() {
 		//checks to see if the simulation should stop
 		if (currentMonth >= maxMonth)
 			run = false;
+
+		else if (spawnOrder.start == nullptr) {
+			run = false;
+			std::cout << "There are no more boats in the simulation" << std::endl;
+		}
 	}
 
 	std::cout << "Thats the end of the simulation" << std::endl;
-	std::cout << "Press any button to enter the next month" << std::endl;
+	std::cout << "Press any button to return back to the menu" << std::endl;
 	std::cin.get();
-}
-
-void Environment::Proccess() {
-
-}
-
-void Environment::Draw() {
-
-	/*
-	
-	current month
-
-	//keep track of the draw line (start at 0)
-
-	draw out the spawnOrder[drawLine]
-
-	draw out the marina[drawLine]
-	
-	draw out the hold[drawLine]
-
-	end line 
-
-
-
-
-	length Left in current month
-
-
-
-	drawLine += 1;
-
-	
-	from the 
-
-	
-
-
-	
-	*/
-
-
-
-
+	system("CLS");
 }
 
 void Environment::TestAllDeletes() {
 
+	//outputs all the boats
 	spawnOrder.OutputBoats(true);
 	std::cin.ignore();
 	std::cin.get();
 
+	//deletes the first item from the list
 	spawnOrder.DeleteItem(spawnOrder.start);
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
+	//deletes a center item from the list
 	spawnOrder.DeleteItem(&spawnOrder.boatSpawnOrder[2]);
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
+	//deletes the last item in the list
 	spawnOrder.DeleteItem(spawnOrder.end);
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
+	//delets the only item in the list
 	spawnOrder.DeleteItem(spawnOrder.end);
 	spawnOrder.OutputBoats(true);
 	std::cin.get();

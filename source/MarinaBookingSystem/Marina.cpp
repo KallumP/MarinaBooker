@@ -1,15 +1,18 @@
 #include "Marina.h"
 
+#include <conio.h>
+#include <Windows.h>
+
 Marina::Marina() {
 }
 
 Marina::~Marina() {
 }
 
-
-
 //does all the processing for the next month
 void Marina::NextMonth(int newMonth) {
+
+	currentMonth = newMonth;
 
 	Draw();
 
@@ -19,13 +22,13 @@ void Marina::NextMonth(int newMonth) {
 	for (int i = 0; i < marinaBoats.size(); i++) {
 
 		//checks to see if the current boat needs to leave
-		if (marinaBoats[i].GetLeave() < newMonth) {
+		if (marinaBoats[i].GetLeave() < currentMonth) {
 
 			//makes the boat leave the marina
 			RemoveBoat(i, false);
 
 			//sets the iterator back to 0
-			i = 0;
+			i = -1;
 
 			boatsToReturn = true;
 		}
@@ -47,15 +50,13 @@ void Marina::RemoveBoat(int removeIndex, bool comeBack) {
 		//recursivley tells the next boat to leave to the hold
 		RemoveBoat(removeIndex - 1, true);
 
-	//once the recursive is done, the boat being handled with will always be index 0
+	//once the recursive is done, the boat being handled with will ALWAYS be index 0
 
 	//checks if the boat should go to the hold
 	if (comeBack)
 
 		//makes the front most boat enter the hold
 		holdingBoats.push_back(marinaBoats[0]);
-
-
 
 	std::cin.get();
 
@@ -101,8 +102,11 @@ void Marina::Draw() {
 	int drawLine = 0;
 	bool drawAgain = true;
 
+	std::cout << "The current month is: " << currentMonth << std::endl << std::endl;
+	std::cout << "Marina";
 
-	std::cout << "Marina                             Hold" << std::endl;
+	MoveCursor(35, 2);
+	std::cout << "Hold" << std::endl;
 
 	//keeps looping while there are more boats to draw
 	while (drawAgain) {
@@ -110,23 +114,26 @@ void Marina::Draw() {
 		//checks to see if there was another line to draw in the marinas
 		if (marinaBoats.size() > drawLine) {
 
+			//draws to the left most side of the console
+			MoveCursor(0, drawLine + 3);
+
+			//draws out the marina boat
 			std::cout << "Boat: " << marinaBoats[drawLine].GetName() << " leaves at: " << marinaBoats[drawLine].GetLeave() << "   ";
-
-		} else {
-
-			//draws some blanks in the absence of a boat
-			std::cout << "                                   ";
 		}
 
 		//checks to see if there was another line to draw in the marinas
 		if (holdingBoats.size() > drawLine) {
 
-			std::cout << "Boat: " << holdingBoats[drawLine].GetName() << " leaves at: " << holdingBoats[drawLine].GetLeave() << "   ";
+			//moves accross in the console by 20 pixels
+			MoveCursor(35, drawLine + 3);
 
+			//draws out the holding boat
+			std::cout << "Boat: " << holdingBoats[drawLine].GetName() << " leaves at: " << holdingBoats[drawLine].GetLeave() << "   ";
 		}
 
 		std::cout << std::endl;
 
+		//increments what line to draw
 		drawLine++;
 
 		//checks to see if there was nothing more to draw
@@ -137,4 +144,22 @@ void Marina::Draw() {
 	}
 }
 
+//moves the cursor of the console to the entered x and y
+void Marina::MoveCursor(int x, int y) {
 
+	//the buffer to write to
+	HANDLE output_handle;
+
+	//a coordiante structure used to hold the position to write to
+	COORD pos;
+
+	//sets the coordinates
+	pos.X = x;
+	pos.Y = y;
+
+	//sets the buffer
+	output_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//moves the cursor
+	SetConsoleCursorPosition(output_handle, pos);
+}
