@@ -71,7 +71,7 @@ void LinkedList::InsertFirstItem(ListItem* newItem) {
 void LinkedList::InsertFirstLocation(ListItem* newItem, ListItem* next) {
 
 	ListItem* toAdd = new ListItem(newItem->GetBoat());
-	
+
 	//sets the new item's next pointer to point to the current item
 	toAdd->SetNextPointer(next);
 
@@ -206,4 +206,15 @@ void LinkedList::OutputBoats(bool forward) {
 
 		std::cout << std::endl << std::endl << std::endl;
 	}
+}
+
+
+
+//returns start
+ListItem* LinkedList::GetStart() {
+	return start;
+}
+//returns end
+ListItem* LinkedList::GetEnd() {
+	return end;
 }

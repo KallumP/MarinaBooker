@@ -34,7 +34,7 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 			allOrders[i].timeings.end,
 			allOrders[i].boatName)));
 
-	//allows the loop to start working
+	//allows the loop to GetStart() working
 	run = true;
 }
 
@@ -51,13 +51,13 @@ void Environment::Loop() {
 		marina.NextMonth(currentMonth);
 
 		//loops if the first boat in the linked list needs to enter the marina
-		while (spawnOrder.start != nullptr && spawnOrder.start->GetBoat().GetEnter() == currentMonth) {
+		while (spawnOrder.GetStart() != nullptr && spawnOrder.GetStart()->GetBoat().GetEnter() == currentMonth) {
 
 			//spawns the first boat from the linked list into the marina
-			marina.SpawnBoat(spawnOrder.start->GetBoat());
+			marina.SpawnBoat(spawnOrder.GetStart()->GetBoat());
 
 			//removes the boat that just entered the marina, from the linked list
-			spawnOrder.DeleteItem(spawnOrder.start);
+			spawnOrder.DeleteItem(spawnOrder.GetStart());
 		}
 
 		//lets the user proceed into the next month on their own time
@@ -71,7 +71,7 @@ void Environment::Loop() {
 		if (currentMonth >= maxMonth)
 			run = false;
 
-		else if (spawnOrder.start == nullptr) {
+		else if (spawnOrder.GetStart() == nullptr) {
 			run = false;
 			std::cout << "There are no more boats in the simulation" << std::endl;
 		}
@@ -95,22 +95,22 @@ void Environment::TestAllDeletes() {
 	std::cin.get();
 
 	//deletes the first item from the list
-	spawnOrder.DeleteItem(spawnOrder.start);
+	spawnOrder.DeleteItem(spawnOrder.GetStart());
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
 	//deletes a center item from the list
-	spawnOrder.DeleteItem(spawnOrder.start->GetNextPointer()->GetNextPointer());
+	spawnOrder.DeleteItem(spawnOrder.GetStart()->GetNextPointer()->GetNextPointer());
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
 	//deletes the last item in the list
-	spawnOrder.DeleteItem(spawnOrder.end);
+	spawnOrder.DeleteItem(spawnOrder.GetEnd());
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 
 	//delets the only item in the list
-	spawnOrder.DeleteItem(spawnOrder.end);
+	spawnOrder.DeleteItem(spawnOrder.GetEnd());
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 

@@ -20,12 +20,6 @@ Turn the date to index method into a static one in the timestamp class
 
 Simulation:
 
-change the linked list sort and delete functions to be private
-only the first method from each function needs to be public (it will call the right 
-public method automatically from that fisrt method)
-
-set ListItems attributes back to private (after testing deletes)
-
 Output the length left per month
 
 find out how to write to a specific part of the console
