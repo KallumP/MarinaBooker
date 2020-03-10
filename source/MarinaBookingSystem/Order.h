@@ -26,6 +26,3 @@ struct Order {
 	TimeStampIndexes timeings;
 	float cost;
 };
-
-
-
