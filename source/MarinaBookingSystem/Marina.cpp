@@ -53,15 +53,23 @@ void Marina::RemoveBoat(int removeIndex, bool comeBack) {
 	//once the recursive is done, the boat being handled with will ALWAYS be index 0
 
 	//checks if the boat should go to the hold
-	if (comeBack)
+	if (comeBack) {
+
+		std::cin.get();
 
 		//makes the front most boat enter the hold
 		holdingBoats.push_back(marinaBoats[0]);
 
-	std::cin.get();
+		//removes the front most boat from the hold
+		marinaBoats.erase(marinaBoats.begin());
 
-	//removes the front most boat from the hold
-	marinaBoats.erase(marinaBoats.begin());
+	} else {
+
+		std::cin.get();
+
+		//removes the front most boat from the hold
+		marinaBoats.erase(marinaBoats.begin());
+	}
 
 	Draw();
 }
@@ -162,4 +170,14 @@ void Marina::MoveCursor(int x, int y) {
 
 	//moves the cursor
 	SetConsoleCursorPosition(output_handle, pos);
+}
+
+//returns if the marina is empty
+bool Marina::Empty() {
+
+	//checks to see if there were any boats in the marina or hold
+	if (marinaBoats.size() == 0 && holdingBoats.size() == 0) 
+		return true;
+
+	return false;
 }

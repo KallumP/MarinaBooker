@@ -20,10 +20,6 @@ Turn the date to index method into a static one in the timestamp class
 
 Simulation:
 
-Turn the linked list to be dynamic
-
-set ListItems attributes back to private (after testing deletes)
-
 Output the length left per month
 
 find out how to write to a specific part of the console
