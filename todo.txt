@@ -17,10 +17,10 @@ use one 150m length boat to fill up a month
 
 Turn the date to index method into a static one in the timestamp class
 
-comment the testAllDelete method
-
 
 Simulation:
+
+Turn the linked list to be dynamic
 
 set ListItems attributes back to private (after testing deletes)
 

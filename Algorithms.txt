@@ -47,8 +47,9 @@ On each leaveBoat, all boats infront need to be put in hold.
 
 The marina should check from the start of the marina, and make each go to the hold
 
-until the boat being checked is the boat that must leave.
+until the boat being checked is the boat that must leave. (recursive method)
 
-keep checking to see what boats need to leave.
+keep checking to see what boats need to leave (until the end of the marina list is reached)
+before returning the hold boats into the marina
 
 When the end of the marinaBoats has been checked, all the hold boats can be sent back to the marina
