@@ -21,6 +21,7 @@ Turn the date to index method into a static one in the timestamp class
 Simulation:
 
 Turn the linked list to be dynamic
+remove the vector, and use dynamic variable assignement
 
 set ListItems attributes back to private (after testing deletes)
 
