@@ -5,16 +5,6 @@
 
 //constructor
 LinkedList::LinkedList() {
-}
-
-//constructor
-LinkedList::LinkedList(int size) {
-
-	//sets up the linked list to a certain size
-	boatSpawnOrder.resize(size);
-
-	//sets up the insert position for the vector to be 0
-	vectorInsert = 0;
 
 	//sets the start to point to nothing
 	start = nullptr;
@@ -26,14 +16,8 @@ LinkedList::LinkedList(int size) {
 //adds a new item
 void LinkedList::AddItem(ListItem newItem) {
 
-	//adds a new list item to the linked list
-	boatSpawnOrder[vectorInsert] = newItem;
-
 	//starts the sort sequence
-	SortItem(&boatSpawnOrder[vectorInsert], start);
-
-	//increments the insert position
-	vectorInsert++;
+	SortItem(&newItem, start);
 }
 
 //sorts the item into the list
@@ -68,59 +52,67 @@ void LinkedList::SortItem(ListItem* newItem, ListItem* current) {
 //inserts the new item as a first item 
 void LinkedList::InsertFirstItem(ListItem* newItem) {
 
+	ListItem* toAdd = new ListItem(newItem->GetBoat());
+
 	//lets the linked list know that the new item is the last item
-	newItem->SetNextPointer(nullptr);
+	toAdd->SetNextPointer(nullptr);
 
 	//lets the linked list know that there are no previous items
-	newItem->SetPrevPointer(nullptr);
+	toAdd->SetPrevPointer(nullptr);
 
 	//lets the linked list know to start at the new item
-	start = newItem;
+	start = toAdd;
 
 	//lest the linked list know that the new item is also the end
-	end = newItem;
+	end = toAdd;
 }
 
 //inserrts the new item into the first spot of the list (only needs the newItem)
 void LinkedList::InsertFirstLocation(ListItem* newItem, ListItem* next) {
 
+	ListItem* toAdd = new ListItem(newItem->GetBoat());
+	
 	//sets the new item's next pointer to point to the current item
-	newItem->SetNextPointer(next);
+	toAdd->SetNextPointer(next);
 
 	//sets the current item's previous pointer to point to the new item
-	next->SetPrevPointer(newItem);
+	next->SetPrevPointer(toAdd);
 
 	//sets the starting point at the new item
-	start = newItem;
+	start = toAdd;
 }
 
 //inserts the new item into the center of the list (needs the newItem, the previousItem and the nextItem)
 void LinkedList::InsertCenterLocation(ListItem* newItem, ListItem* prev, ListItem* next) {
 
+	ListItem* toAdd = new ListItem(newItem->GetBoat());
+
 	//sets the previous item's next pointer to point to the new item
-	prev->SetNextPointer(newItem);
+	prev->SetNextPointer(toAdd);
 
 	//sets the new item's prev pointer to piont to the previous item
-	newItem->SetPrevPointer(prev);
+	toAdd->SetPrevPointer(prev);
 
 	//sets the new item's next pointer to point to the next item
-	newItem->SetNextPointer(next);
+	toAdd->SetNextPointer(next);
 
 	//sets the next item's previous pointer to point to the new item
-	next->SetPrevPointer(newItem);
+	next->SetPrevPointer(toAdd);
 }
 
 //inserts the new item into the end of the list (needs the newItem and the prvious item
 void LinkedList::InsertLastLocation(ListItem* newItem, ListItem* prev) {
 
+	ListItem* toAdd = new ListItem(newItem->GetBoat());
+
 	//sets the previous item's next pointer to point to the new item
-	prev->SetNextPointer(newItem);
+	prev->SetNextPointer(toAdd);
 
 	//sets the new item's prev pointer to piont to the previous item
-	newItem->SetPrevPointer(prev);
+	toAdd->SetPrevPointer(prev);
 
 	//sets up where the end of the list is
-	end = newItem;
+	end = toAdd;
 }
 
 //goes through the deleting protocol

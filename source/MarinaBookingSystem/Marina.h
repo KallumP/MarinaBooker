@@ -14,7 +14,7 @@ public:
 
 	void SpawnBoat(Boat);
 	void NextMonth(int);
-
+	bool Empty();
 private:
 
 	void RemoveBoat(int, bool);

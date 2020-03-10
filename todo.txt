@@ -20,8 +20,9 @@ Turn the date to index method into a static one in the timestamp class
 
 Simulation:
 
-Turn the linked list to be dynamic
-remove the vector, and use dynamic variable assignement
+change the linked list sort and delete functions to be private
+only the first method from each function needs to be public (it will call the right 
+public method automatically from that fisrt method)
 
 set ListItems attributes back to private (after testing deletes)
 

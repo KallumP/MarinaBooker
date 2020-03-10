@@ -11,6 +11,7 @@ Environment::Environment(std::vector<Order> allOrders, int simLength) {
 	maxMonth = simLength;
 	SetupBoatEntryOrder(allOrders);
 	Loop();
+	//TestAllDeletes();
 }
 
 Environment::~Environment() {
@@ -20,7 +21,7 @@ Environment::~Environment() {
 void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 
 	//instantiates the linked list
-	spawnOrder = LinkedList(allOrders.size());
+	spawnOrder = LinkedList();
 
 	//loops through each of the orders
 	for (size_t i = 0; i < allOrders.size(); i++)
@@ -74,6 +75,10 @@ void Environment::Loop() {
 			run = false;
 			std::cout << "There are no more boats in the simulation" << std::endl;
 		}
+
+		//checks to see if the marina still has boats to work with
+		if (!marina.Empty())
+			run = true;
 	}
 
 	std::cout << "Thats the end of the simulation" << std::endl;
@@ -95,7 +100,7 @@ void Environment::TestAllDeletes() {
 	std::cin.get();
 
 	//deletes a center item from the list
-	spawnOrder.DeleteItem(&spawnOrder.boatSpawnOrder[2]);
+	spawnOrder.DeleteItem(spawnOrder.start->GetNextPointer()->GetNextPointer());
 	spawnOrder.OutputBoats(true);
 	std::cin.get();
 

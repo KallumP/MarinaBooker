@@ -6,9 +6,7 @@
 class LinkedList {
 
 public:
-
 	LinkedList();
-	LinkedList(int);
 
 	void AddItem(ListItem);
 	void SortItem(ListItem*, ListItem*);
@@ -22,9 +20,6 @@ public:
 	void OutputBoats(bool);
 
 	//private:
-
-	std::vector<ListItem> boatSpawnOrder;
-	int vectorInsert;
 	ListItem* start;
 	ListItem* end;
 };
