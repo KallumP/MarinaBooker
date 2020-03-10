@@ -5,21 +5,22 @@ class ListItem {
 
 public:
 
-
 	ListItem();
 	ListItem(Boat);
+	~ListItem();
 
 	void SetNextPointer(ListItem*);
 	void SetPrevPointer(ListItem*);
-	ListItem* GetPrevPointer();
 	ListItem* GetNextPointer();
+	ListItem* GetPrevPointer();
 
 	Boat GetBoat();
+
 private:
 	Boat boat;
 
-	ListItem* nextBoat;
-	ListItem* prevBoat;
+	ListItem* next;
+	ListItem* prev;
 
 };
 

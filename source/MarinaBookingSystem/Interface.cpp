@@ -76,7 +76,7 @@ void Interface::RegisterOrder(Order newOrder) {
 	allOrders.push_back(newOrder);
 
 	//goes through each month that was ordered for
-	for (int i = newOrder.timeings.start; i <= newOrder.timeings.end; i++)
+	for (int i = newOrder.timings.start; i <= newOrder.timings.end; i++)
 
 		//adjusts the timetable to now account for the new boat length for the current month in the loop
 		timeTable[i].AdjustLength(newOrder.length);
@@ -94,8 +94,8 @@ void Interface::WriteToFile(Order order) {
 
 	toWrite << order.depth << std::endl;
 	toWrite << order.length << std::endl;
-	toWrite << timeTable[order.timeings.start].GetDate() << std::endl;
-	toWrite << timeTable[order.timeings.end].GetDate() << std::endl;
+	toWrite << timeTable[order.timings.start].GetDate() << std::endl;
+	toWrite << timeTable[order.timings.end].GetDate() << std::endl;
 	toWrite << order.name << std::endl;
 	toWrite << order.boatName << std::endl;
 
@@ -112,8 +112,8 @@ void Interface::CreateProgrammaticOrder(int val) {
 	autoGenOrder.boatName = "Boat " + std::to_string(val);
 	autoGenOrder.name = "Name " + std::to_string(val);
 
-	autoGenOrder.timeings.start = val;
-	autoGenOrder.timeings.end = val;
+	autoGenOrder.timings.start = val;
+	autoGenOrder.timings.end = val;
 
 	RegisterOrder(autoGenOrder);
 	WriteToFile(autoGenOrder);
@@ -201,17 +201,17 @@ void Interface::LoadOrders() {
 			if (endIndex != -1) {
 
 				//sets the end date index
-				newOrder.timeings.end = endIndex;
+				newOrder.timings.end = endIndex;
 
 				//checks to see if the order start was still within the timetable
 				if (startIndex != -1) {
 
 					//sets the start date index
-					newOrder.timeings.start = startIndex;
+					newOrder.timings.start = startIndex;
 				} else {
 
 					//sets the start to the first month of the timetable
-					newOrder.timeings.start = 0;
+					newOrder.timings.start = 0;
 				}
 
 			} else {
@@ -628,8 +628,8 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 	} while (repeat);
 
 	//saves where what index of timestamps the chosen date was from
-	order.timeings.start = startingIndex;
-	order.timeings.end = chosenInterval.end;
+	order.timings.start = startingIndex;
+	order.timings.end = chosenInterval.end;
 
 	system("CLS");
 
@@ -651,10 +651,10 @@ void Interface::TakeEndMonth() {
 		//shows currently entered values
 		std::cout << "Entered depth: " << order.depth << std::endl;
 		std::cout << "Entered length: " << order.length << std::endl;
-		std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl << std::endl;
+		std::cout << "Start: " << timeTable[order.timings.start].GetDate() << std::endl << std::endl;
 
 		//finds out how many months can be booked
-		int availableMonths = order.timeings.end - order.timeings.start;
+		int availableMonths = order.timings.end - order.timings.start;
 
 		//asks how many months were wanted
 		std::cout << "You can book for:  " << availableMonths << " months." << std::endl;
@@ -672,7 +672,7 @@ void Interface::TakeEndMonth() {
 			if (input > 0 && input <= availableMonths) {
 
 				//sets the end date
-				order.timeings.end = order.timeings.start + input;
+				order.timings.end = order.timings.start + input;
 
 				//stops the input from looping
 				repeat = false;
@@ -705,8 +705,8 @@ void Interface::TakeUserName() {
 	//shows currently entered values
 	std::cout << "Entered depth: " << order.depth << std::endl;
 	std::cout << "Entered length: " << order.length << std::endl;
-	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
-	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl << std::endl;
+	std::cout << "Start: " << timeTable[order.timings.start].GetDate() << std::endl;
+	std::cout << "End: " << timeTable[order.timings.end].GetDate() << std::endl << std::endl;
 
 	std::cout << "Enter your name: ";
 	std::cin.ignore();
@@ -719,8 +719,8 @@ void Interface::TakeBoatName() {
 	//shows currently entered values
 	std::cout << "Entered depth: " << order.depth << std::endl;
 	std::cout << "Entered length: " << order.length << std::endl;
-	std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
-	std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
+	std::cout << "Start: " << timeTable[order.timings.start].GetDate() << std::endl;
+	std::cout << "End: " << timeTable[order.timings.end].GetDate() << std::endl;
 	std::cout << "Name: " << order.name << std::endl << std::endl;
 
 	std::cout << "Enter your boats name: ";
@@ -732,7 +732,7 @@ void Interface::TakeBoatName() {
 //calculates the cost using 10*length*months
 void Interface::CalculateCosts() {
 
-	order.cost = 10 * order.length * (order.timeings.end - order.timeings.start);
+	order.cost = 10 * order.length * (order.timings.end - order.timings.start);
 }
 
 //outputs all the given inputs and asks for confirmation
@@ -747,8 +747,8 @@ void Interface::ConfirmEntries() {
 		//shows currently entered values
 		std::cout << "Entered depth: " << order.depth << std::endl;
 		std::cout << "Entered length: " << order.length << std::endl;
-		std::cout << "Start: " << timeTable[order.timeings.start].GetDate() << std::endl;
-		std::cout << "End: " << timeTable[order.timeings.end].GetDate() << std::endl;
+		std::cout << "Start: " << timeTable[order.timings.start].GetDate() << std::endl;
+		std::cout << "End: " << timeTable[order.timings.end].GetDate() << std::endl;
 		std::cout << "Name: " << order.name << std::endl;
 		std::cout << "Boat name: " << order.boatName << std::endl;
 		std::cout << "Cost: " << order.cost << std::endl << std::endl;
@@ -797,8 +797,8 @@ void Interface::ShowAllOrders() {
 			std::cout << allOrders[i].name << std::endl;
 			std::cout << "Boat: " << allOrders[i].boatName << std::endl;
 			std::cout << "Length: " << allOrders[i].length << "m" << std::endl;
-			std::cout << "Start: " << timeTable[allOrders[i].timeings.start].GetDate() << std::endl;
-			std::cout << "End: " << timeTable[allOrders[i].timeings.end].GetDate() << std::endl << std::endl;
+			std::cout << "Start: " << timeTable[allOrders[i].timings.start].GetDate() << std::endl;
+			std::cout << "End: " << timeTable[allOrders[i].timings.end].GetDate() << std::endl << std::endl;
 		}
 
 	else
@@ -849,7 +849,7 @@ void Interface::DeleteOrder() {
 			//TODO checks if the order id is the same
 
 			//checks to see if the input details were correct
-			if (allOrders[i].boatName == boatName && allOrders[i].timeings.start == dateIndex) {
+			if (allOrders[i].boatName == boatName && allOrders[i].timings.start == dateIndex) {
 
 				//saves the index of the order
 				orderIndex = i;

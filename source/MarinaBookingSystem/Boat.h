@@ -12,17 +12,12 @@ public:
 	int GetLeave();
 	std::string GetName();
 
-	void Leave(bool);
-	void Return();
-
 private:
 	float length;
 	float depth;
 
 	int entryMonth;
 	int leaveMonth;
-
-	float linePosition;
 
 	std::string name;
 };

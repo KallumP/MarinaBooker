@@ -23,6 +23,7 @@ struct Order {
 	float length;
 	std::string name;
 	std::string boatName;
-	TimeStampIndexes timeings;
+	TimeStampIndexes timings;
 	float cost;
+	int orderNumber;
 };

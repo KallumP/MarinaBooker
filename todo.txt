@@ -1,7 +1,5 @@
 General:
 
-add a way to exit the program when in any of the stages
-
 make sure that string inputs are not too long (check against a constant size)
 
 When an order is done, it should output an order number 
@@ -16,7 +14,12 @@ use up multiple months in the middle
 use one 150m length boat to fill up a month
 
 Turn the date to index method into a static one in the timestamp class
+make a reverse version, that turns an index into a date
+reflect this change of methods in the class diagram
 
+boat inheritance
+
+have a £ before the cost
 
 Simulation:
 
@@ -28,4 +31,10 @@ https://docs.microsoft.com/en-us/windows/console/setconsolecursorposition
 
 Report:
 
+I've made the time table be 24 months long
 Justify the reason for using a struct
+
+Justify not exiting the booking when a wrong input was entered
+
+I don't write to the file when terminating the program, but instead when the order if finished
+this way, if the application is closed incorrectly, the user does not loose all their data

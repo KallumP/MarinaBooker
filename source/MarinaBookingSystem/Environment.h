@@ -18,8 +18,6 @@ public:
 private:
 	void SetupBoatEntryOrder(std::vector<Order>);
 	void Loop();
-	void Proccess();
-	void Draw();
 
 	void TestAllDeletes();
 

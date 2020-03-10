@@ -30,8 +30,8 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 		spawnOrder.AddItem(ListItem(Boat(
 			allOrders[i].length,
 			allOrders[i].depth,
-			allOrders[i].timeings.start,
-			allOrders[i].timeings.end,
+			allOrders[i].timings.start,
+			allOrders[i].timings.end,
 			allOrders[i].boatName)));
 
 	//allows the loop to GetStart() working

@@ -11,8 +11,6 @@ Boat::Boat(float _length, float _depth, int _entryMonth, int _leaveMonth, std::s
 	leaveMonth = _leaveMonth;
 
 	name = _name;
-
-	linePosition = -1;
 }
 
 Boat::~Boat() {
@@ -29,12 +27,4 @@ int Boat::GetLeave() {
 
 std::string Boat::GetName() {
 	return name;
-}
-
-void Boat::Leave(bool comeBack) {
-
-}
-
-void Boat::Return() {
-
 }

@@ -2,14 +2,14 @@
 #include "Boat.h"
 
 ListItem::ListItem() {
-	nextBoat = nullptr;
-	prevBoat = nullptr;
+	next = nullptr;
+	prev = nullptr;
 }
 
 ListItem::ListItem(Boat _boat) {
 	boat = _boat;
-	nextBoat = nullptr;
-	prevBoat = nullptr;
+	next = nullptr;
+	prev = nullptr;
 }
 
 Boat ListItem::GetBoat() {
@@ -18,18 +18,18 @@ Boat ListItem::GetBoat() {
 
 
 ListItem* ListItem::GetNextPointer() {
-	return nextBoat;
+	return next;
 }
 
 void ListItem::SetNextPointer(ListItem* next) {
-	nextBoat = next;
+	next = next;
 }
 
 ListItem* ListItem::GetPrevPointer() {
-	return prevBoat;
+	return prev;
 }
 
 void ListItem::SetPrevPointer(ListItem* prev) {
-	prevBoat = prev;
+	prev = prev;
 }
 
