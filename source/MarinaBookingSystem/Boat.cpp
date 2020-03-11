@@ -33,9 +33,11 @@ std::string Boat::GetName() {
 Narrow::Narrow(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name) : Boat(_length, _depth, _entryMonth, _leaveMonth, _name) {
 
 }
+
 Sailing::Sailing(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name) : Boat(_length, _depth, _entryMonth, _leaveMonth, _name) {
 
 }
+
 Motor::Motor(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name) : Boat(_length, _depth, _entryMonth, _leaveMonth, _name) {
 
 }

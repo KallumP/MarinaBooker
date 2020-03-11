@@ -1,5 +1,6 @@
 #include "Environment.h"
 #include "ListItem.h"
+#include "Boat.h"
 
 Environment::Environment() {
 }
@@ -26,15 +27,37 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 	//loops through each of the orders
 	for (int i = 0; i < allOrders.size(); i++)
 
-		//adds a list item to the linked list
-		spawnOrder.AddItem(ListItem(Boat(
-			allOrders[i].length,
-			allOrders[i].depth,
-			allOrders[i].timings.start,
-			allOrders[i].timings.end,
-			allOrders[i].boatName)));
+		//adds the right type of boat
+		if (allOrders[i].type == "Narrow")
 
-	//allows the loop to GetStart() working
+			//adds a list item to the linked list
+			spawnOrder.AddItem(ListItem(Narrow(
+				allOrders[i].length,
+				allOrders[i].depth,
+				allOrders[i].timings.start,
+				allOrders[i].timings.end,
+				allOrders[i].boatName)));
+
+		else if (allOrders[i].type == "Sail")
+
+			//adds a list item to the linked list
+			spawnOrder.AddItem(ListItem(Sailing(
+				allOrders[i].length,
+				allOrders[i].depth,
+				allOrders[i].timings.start,
+				allOrders[i].timings.end,
+				allOrders[i].boatName)));
+
+		else if (allOrders[i].type == "Motor")
+
+			//adds a list item to the linked list
+			spawnOrder.AddItem(ListItem(Motor(
+				allOrders[i].length,
+				allOrders[i].depth,
+				allOrders[i].timings.start,
+				allOrders[i].timings.end,
+				allOrders[i].boatName)));
+
 	run = true;
 }
 
@@ -61,7 +84,7 @@ void Environment::Loop() {
 		}
 
 		//lets the user proceed into the next month on their own time
-		std::cout << std::endl << "Press any button to enter the next month" <<std::endl;
+		std::cout << std::endl << "Press any button to enter the next month" << std::endl;
 		std::cin.get();
 		system("CLS");
 

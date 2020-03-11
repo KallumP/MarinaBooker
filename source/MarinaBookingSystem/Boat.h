@@ -22,13 +22,16 @@ private:
 	std::string name;
 };
 
-class Narrow : Boat {
+class Narrow : public Boat {
+public:
 	Narrow(float, float, int, int, std::string);
 };
-class Sailing : Boat {
+class Sailing : public Boat {
+public:
 	Sailing(float, float, int, int, std::string);
 };
-class Motor : Boat {
+class Motor : public Boat {
+public:
 	Motor(float, float, int, int, std::string);
 };
 
