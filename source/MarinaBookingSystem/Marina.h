@@ -1,8 +1,9 @@
 #pragma once
+#include "TimeStamp.h"
+#include "Boat.h"
+
 #include <iostream>
 #include <vector>
-
-#include "Boat.h"
 
 class Marina {
 
@@ -10,6 +11,7 @@ class Marina {
 public:
 
 	Marina();
+	Marina(std::vector<TimeStamp>);
 	~Marina();
 
 	void SpawnBoat(Boat);
@@ -25,5 +27,6 @@ private:
 	std::vector<Boat> marinaBoats;
 	std::vector<Boat> holdingBoats;
 	int currentMonth;
+	std::vector<TimeStamp> timeTable;
 };
 

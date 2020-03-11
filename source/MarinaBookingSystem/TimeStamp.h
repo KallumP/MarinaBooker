@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 
 class TimeStamp {
 
@@ -19,6 +20,5 @@ private:
 
 	std::string date;
 	float lengthUsed;
-
 };
 

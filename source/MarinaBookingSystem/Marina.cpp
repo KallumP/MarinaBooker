@@ -1,9 +1,14 @@
 #include "Marina.h"
+#include "TimeStamp.h"
 
 #include <conio.h>
 #include <Windows.h>
 
 Marina::Marina() {
+}
+
+Marina::Marina(std::vector<TimeStamp> _timeTable) {
+	timeTable = _timeTable;
 }
 
 Marina::~Marina() {
@@ -118,8 +123,7 @@ void Marina::Draw() {
 	int drawLine = 0;
 	bool drawAgain = true;
 
-	std::cout << "The current month is: " << currentMonth << std::endl;
-
+	std::cout << "The current month is: " << timeTable[currentMonth].GetDate() << std::endl;
 
 	int lengthLeft = 150;
 
@@ -152,7 +156,7 @@ void Marina::Draw() {
 			MoveCursor(consoleMoveMarina, drawLine + 3);
 
 			//draws out the marina boat
-			std::cout << "Boat: " << marinaBoats[drawLine].GetName() << " leaves at: " << marinaBoats[drawLine].GetLeave() << "   ";
+			std::cout << "Boat: " << marinaBoats[drawLine].GetName() << " leaves at: " << timeTable[marinaBoats[drawLine].GetLeave()].GetDate() << "   ";
 		}
 
 		//checks to see if there was another line to draw in the marinas

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "TimeStamp.h"
 
@@ -6,7 +7,6 @@ TimeStamp::TimeStamp() {
 }
 
 TimeStamp::TimeStamp(std::string _date) {
-	
 	date = _date;
 	lengthUsed = 0;
 }
@@ -26,6 +26,5 @@ float TimeStamp::GetLengthUsed() {
 }
 
 std::string TimeStamp::GetDate() {
-
 	return date;
 }

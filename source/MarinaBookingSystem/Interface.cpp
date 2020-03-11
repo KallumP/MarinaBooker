@@ -629,7 +629,6 @@ void Interface::TakeStartMonth(TimeStampIndexes chosenInterval) {
 				//registers that a good date was entered
 				repeat = false;
 			}
-
 		}
 
 		system("CLS");
@@ -680,8 +679,6 @@ void Interface::TakeEndMonth() {
 
 		//makes sure that the user entered a numerical input
 		if (NumericalInput()) {
-
-
 
 			//checks to see if a correct number was inputed (bigger than 0 and within the available months)
 			if (input > 0 && input <= availableMonths) {
@@ -744,6 +741,7 @@ void Interface::TakeBoatName() {
 	std::getline(std::cin, order.boatName);
 }
 
+//takes the type of the boat
 void Interface::TakeBoatType() {
 
 	std::string input;
@@ -805,7 +803,6 @@ void Interface::TakeBoatType() {
 	} while (repeat);
 }
 
-
 //calculates the cost using 10*length*months
 void Interface::CalculateCosts() {
 
@@ -829,7 +826,7 @@ void Interface::ConfirmEntries() {
 		std::cout << "Name: " << order.name << std::endl;
 		std::cout << "Boat name: " << order.boatName << std::endl;
 		std::cout << "Boat type: " << order.type << std::endl;
-		std::cout << "Cost: £" << order.cost << std::endl << std::endl;
+		std::cout << "Cost: " << order.cost << " pounds" << std::endl << std::endl;
 
 		std::cout << "Enter (y or n): ";
 		std::string input;
@@ -891,9 +888,6 @@ void Interface::DeleteOrder() {
 	std::string boatName;
 	std::string startDate;
 	int dateIndex = -1;
-	int orderNumber = -1;
-
-	//TODO enter order number
 
 
 	std::cout << "Enter your boat name: " << std::endl;
@@ -925,8 +919,6 @@ void Interface::DeleteOrder() {
 		//loops through the orders
 		for (int i = 0; i < allOrders.size(); i++) {
 
-			//TODO checks if the order id is the same
-
 			//checks to see if the input details were correct
 			if (allOrders[i].boatName == boatName && allOrders[i].timings.start == dateIndex) {
 
@@ -943,7 +935,6 @@ void Interface::DeleteOrder() {
 			system("CLS");
 
 			std::cout << "Boat name: " << boatName << std::endl;
-			std::cout << "Order being deleted: " << orderNumber << std::endl << std::endl;
 
 			std::string input;
 
@@ -978,7 +969,7 @@ void Interface::DeleteOrder() {
 void Interface::Simulation() {
 
 	//makes the environement for the simulation
-	Environment e = Environment(allOrders, timeTable.size());
+	Environment e = Environment(allOrders, timeTable);
 }
 
 //the exit sequence

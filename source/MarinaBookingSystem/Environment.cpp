@@ -5,11 +5,11 @@
 Environment::Environment() {
 }
 
-Environment::Environment(std::vector<Order> allOrders, int simLength) {
+Environment::Environment(std::vector<Order> allOrders, std::vector<TimeStamp> timeTable) {
 
-	marina = Marina();
+	marina = Marina(timeTable);
 	currentMonth = 0;
-	maxMonth = simLength;
+	maxMonth = timeTable.size();
 	SetupBoatEntryOrder(allOrders);
 	Loop();
 	//TestAllDeletes();

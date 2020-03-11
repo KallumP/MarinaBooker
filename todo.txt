@@ -1,15 +1,6 @@
 General:
 
-When an order is done, it should output an order number 
-which will be used for deleting
-
 store the start and ends in the order as string aswell as the start and end index
-
-Turn the date to index method into a static one in the timestamp class
-make a reverse version, that turns an index into a date
-reflect this change of methods in the class diagram
-
-Why can't the console show £
 
 Simulation:
 

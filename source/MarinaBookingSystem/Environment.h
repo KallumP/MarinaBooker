@@ -12,7 +12,7 @@ class Environment {
 public:
 
 	Environment();
-	Environment(std::vector<Order>, int);
+	Environment(std::vector<Order>, std::vector<TimeStamp>);
 	~Environment();
 
 private:
