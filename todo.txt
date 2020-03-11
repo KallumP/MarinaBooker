@@ -15,14 +15,3 @@ Simulation:
 
 
 Report:
-
-I've made the time table be 24 months long
-Justify the reason for using a struct
-
-Justify not exiting the booking when a wrong input was entered
-
-I don't write to the file when terminating the program, but instead when the order if finished
-this way, if the application is closed incorrectly, the user does not loose all their data
-
-Writing to a specific part of the console
-https://docs.microsoft.com/en-us/windows/console/setconsolecursorposition

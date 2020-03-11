@@ -196,6 +196,8 @@ void Marina::MoveCursor(int x, int y) {
 
 	//moves the cursor
 	SetConsoleCursorPosition(output_handle, pos);
+
+	//REFERENCE https://docs.microsoft.com/en-us/windows/console/setconsolecursorposition
 }
 
 //returns if the marina is empty

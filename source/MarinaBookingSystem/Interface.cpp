@@ -45,6 +45,8 @@ bool Interface::NumericalInput() {
 
 		return true;
 	}
+
+	//REFERENCE https://stackoverflow.com/questions/5655142/how-to-check-if-input-is-numeric-in-c
 }
 
 //turns an input date into 
@@ -308,6 +310,8 @@ void Interface::MainMenu() {
 				std::cout << "Press enter to continue" << std::endl;
 				std::cin.ignore();
 				std::cin.get();
+
+				//REFERENCE https://cboard.cprogramming.com/cplusplus-programming/80399-why-doesnt-cin-get-pause-program.html
 				system("CLS");
 				break;
 
