@@ -1017,6 +1017,12 @@ void Interface::Help() {
 
 	std::cout << "Loading an order from the text file will remove any order \nthat is out of date (an order that ends before the current date)" << std::endl << std::endl << std::endl;
 
+	std::cout << "Once in the simulation, you will be told what month the simulation is currently in" << std::endl;
+	std::cout << "The name of a boat will be constrained to 8 letters long (for formattings sake)" << std::endl;
+	std::cout << "To progress the simulation, press enter. You have to press enter after each action" << std::endl;
+	std::cout << "An action is: moving a boat to hold, removing a boat, moving a boat back from hold, adding a new boat" << std::endl;
+	std::cout << "The simulation will end if: the last month is reached or if there are no more boats left to add" << std::endl << std::endl << std::endl;
+
 	std::cout << "Press enter to continue" << std::endl;
 	std::cin.ignore();
 	std::cin.get();

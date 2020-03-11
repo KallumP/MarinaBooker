@@ -97,7 +97,15 @@ void Marina::SpawnBoat(Boat toSpawn) {
 
 	std::cin.get();
 
-	marinaBoats.push_back(toSpawn);
+	Boat normalized = toSpawn;
+
+	//checks to see if the name is bigger than 8 characters
+	if (toSpawn.GetName().size() > 8)
+
+		//only takes the first 8 characters
+		normalized.SetName(toSpawn.GetName().substr(0, 8));
+
+	marinaBoats.push_back(normalized);
 
 	Draw();
 }
@@ -110,10 +118,28 @@ void Marina::Draw() {
 	int drawLine = 0;
 	bool drawAgain = true;
 
-	std::cout << "The current month is: " << currentMonth << std::endl << std::endl;
+	std::cout << "The current month is: " << currentMonth << std::endl;
+
+
+	int lengthLeft = 150;
+
+	//goes through each boat
+	for (int i = 0; i < marinaBoats.size(); i++)
+
+		//registers how much length the boat takes up
+		lengthLeft -= marinaBoats[i].GetLength();
+
+	//outputs the length left
+	std::cout << "Length left: " << lengthLeft << "m" << std::endl << std::endl;
+
+
+	int consoleMoveHold = 40;
+	int consoleMoveMarina = 0;
+
+	MoveCursor(consoleMoveMarina, 2);
 	std::cout << "Marina";
 
-	MoveCursor(35, 2);
+	MoveCursor(consoleMoveHold, 2);
 	std::cout << "Hold" << std::endl;
 
 	//keeps looping while there are more boats to draw
@@ -123,7 +149,7 @@ void Marina::Draw() {
 		if (marinaBoats.size() > drawLine) {
 
 			//draws to the left most side of the console
-			MoveCursor(0, drawLine + 3);
+			MoveCursor(consoleMoveMarina, drawLine + 3);
 
 			//draws out the marina boat
 			std::cout << "Boat: " << marinaBoats[drawLine].GetName() << " leaves at: " << marinaBoats[drawLine].GetLeave() << "   ";
@@ -133,7 +159,7 @@ void Marina::Draw() {
 		if (holdingBoats.size() > drawLine) {
 
 			//moves accross in the console by 20 pixels
-			MoveCursor(35, drawLine + 3);
+			MoveCursor(consoleMoveHold, drawLine + 3);
 
 			//draws out the holding boat
 			std::cout << "Boat: " << holdingBoats[drawLine].GetName() << " leaves at: " << holdingBoats[drawLine].GetLeave() << "   ";
@@ -176,7 +202,7 @@ void Marina::MoveCursor(int x, int y) {
 bool Marina::Empty() {
 
 	//checks to see if there were any boats in the marina or hold
-	if (marinaBoats.size() == 0 && holdingBoats.size() == 0) 
+	if (marinaBoats.size() == 0 && holdingBoats.size() == 0)
 		return true;
 
 	return false;

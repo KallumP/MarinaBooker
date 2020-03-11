@@ -11,6 +11,8 @@ public:
 	int GetEnter();
 	int GetLeave();
 	std::string GetName();
+	void SetName(std::string);
+	int GetLength();
 
 private:
 	float length;

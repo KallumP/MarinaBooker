@@ -5,26 +5,13 @@ which will be used for deleting
 
 store the start and ends in the order as string aswell as the start and end index
 
-test interval finding
-use up the first few months
-use up the last few months
-use up multiple months in the middle
-use one 150m length boat to fill up a month
-
 Turn the date to index method into a static one in the timestamp class
 make a reverse version, that turns an index into a date
 reflect this change of methods in the class diagram
 
-boat inheritance
-
 Why can't the console show £
 
 Simulation:
-
-Output the length left per month
-
-find out how to write to a specific part of the console
-https://docs.microsoft.com/en-us/windows/console/setconsolecursorposition
 
 
 Report:
@@ -36,3 +23,6 @@ Justify not exiting the booking when a wrong input was entered
 
 I don't write to the file when terminating the program, but instead when the order if finished
 this way, if the application is closed incorrectly, the user does not loose all their data
+
+Writing to a specific part of the console
+https://docs.microsoft.com/en-us/windows/console/setconsolecursorposition

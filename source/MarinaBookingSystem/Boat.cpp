@@ -28,6 +28,13 @@ int Boat::GetLeave() {
 std::string Boat::GetName() {
 	return name;
 }
+void Boat::SetName(std::string value) {
+	 name = value;
+}
+
+int Boat::GetLength() {
+	return length;
+}
 
 
 Narrow::Narrow(float _length, float _depth, int _entryMonth, int _leaveMonth, std::string _name) : Boat(_length, _depth, _entryMonth, _leaveMonth, _name) {
