@@ -33,6 +33,7 @@ private:
 	void TakeEndMonth();
 	void TakeUserName();
 	void TakeBoatName();
+	void TakeBoatType();
 	void CalculateCosts();
 	void ConfirmEntries();
 

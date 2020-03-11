@@ -1,7 +1,5 @@
 General:
 
-make sure that string inputs are not too long (check against a constant size)
-
 When an order is done, it should output an order number 
 which will be used for deleting
 
@@ -19,7 +17,7 @@ reflect this change of methods in the class diagram
 
 boat inheritance
 
-have a £ before the cost
+Why can't the console show £
 
 Simulation:
 

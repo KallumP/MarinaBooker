@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <algorithm>
 
 //Constructor
 Interface::Interface() {
@@ -98,6 +99,7 @@ void Interface::WriteToFile(Order order) {
 	toWrite << timeTable[order.timings.end].GetDate() << std::endl;
 	toWrite << order.name << std::endl;
 	toWrite << order.boatName << std::endl;
+	toWrite << order.type << std::endl;
 
 	toWrite.close();
 }
@@ -114,6 +116,7 @@ void Interface::CreateProgrammaticOrder(int val) {
 
 	autoGenOrder.timings.start = val;
 	autoGenOrder.timings.end = val;
+	autoGenOrder.type = "Narrow";
 
 	RegisterOrder(autoGenOrder);
 	WriteToFile(autoGenOrder);
@@ -227,6 +230,10 @@ void Interface::LoadOrders() {
 			//sets the boat name
 			std::getline(toRead, line);
 			newOrder.boatName = line;
+
+			//sets the boat type
+			std::getline(toRead, line);
+			newOrder.type = line;
 
 			//registers the order into the program (does not rewrite it to the file)
 			RegisterOrder(newOrder);
@@ -354,6 +361,10 @@ void Interface::TakeOrder() {
 	system("CLS");
 
 	TakeBoatName();
+
+	system("CLS");
+
+	TakeBoatType();
 
 	system("CLS");
 
@@ -729,6 +740,68 @@ void Interface::TakeBoatName() {
 	std::getline(std::cin, order.boatName);
 }
 
+void Interface::TakeBoatType() {
+
+	std::string input;
+	bool repeat = false;
+
+	//loops until a correct end time was entered
+	do {
+
+		//shows currently entered values
+		std::cout << "Entered depth: " << order.depth << std::endl;
+		std::cout << "Entered length: " << order.length << std::endl;
+		std::cout << "Start: " << timeTable[order.timings.start].GetDate() << std::endl;
+		std::cout << "End: " << timeTable[order.timings.end].GetDate() << std::endl;
+		std::cout << "Name: " << order.name << std::endl;
+		std::cout << "Boat name: " << order.boatName << std::endl << std::endl;
+
+
+		//asks the user what type their boat is
+		std::cout << "What is your boat type?" << std::endl;
+		std::cout << "Please enter one of the letters presented below" << std::endl;
+		std::cout << "(N): Narrow" << std::endl;
+		std::cout << "(S): Sail" << std::endl;
+		std::cout << "(M): Motor" << std::endl;
+
+		//gets the input
+		std::cin >> input;
+
+		//turns the input to upper case
+		std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+
+		//checks if the input was valid
+		if (input == "N") {
+
+			//sets the boat type
+			order.type = "Narrow";
+			repeat = false;
+
+		} else if (input == "S") {
+
+			//sets the boat type
+			order.type = "Sail";
+			repeat = false;
+
+		} else if (input == "M") {
+
+			//sets the boat type
+			order.type = "Motor";
+			repeat = false;
+
+		} else {
+
+			//lets the user know to enter a correct value
+			system("CLS");
+			std::cout << "Please enter one of the available letters" << std::endl << std::endl;
+			repeat = true;
+		}
+
+		//repeats until a valid type was entered
+	} while (repeat);
+}
+
+
 //calculates the cost using 10*length*months
 void Interface::CalculateCosts() {
 
@@ -751,7 +824,8 @@ void Interface::ConfirmEntries() {
 		std::cout << "End: " << timeTable[order.timings.end].GetDate() << std::endl;
 		std::cout << "Name: " << order.name << std::endl;
 		std::cout << "Boat name: " << order.boatName << std::endl;
-		std::cout << "Cost: " << order.cost << std::endl << std::endl;
+		std::cout << "Boat type: " << order.type << std::endl;
+		std::cout << "Cost: £" << order.cost << std::endl << std::endl;
 
 		std::cout << "Enter (y or n): ";
 		std::string input;
@@ -797,6 +871,7 @@ void Interface::ShowAllOrders() {
 			std::cout << allOrders[i].name << std::endl;
 			std::cout << "Boat: " << allOrders[i].boatName << std::endl;
 			std::cout << "Length: " << allOrders[i].length << "m" << std::endl;
+			std::cout << "Type: " << allOrders[i].type << std::endl;
 			std::cout << "Start: " << timeTable[allOrders[i].timings.start].GetDate() << std::endl;
 			std::cout << "End: " << timeTable[allOrders[i].timings.end].GetDate() << std::endl << std::endl;
 		}

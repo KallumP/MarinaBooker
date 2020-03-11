@@ -7,6 +7,7 @@ class LinkedList {
 
 public:
 	LinkedList();
+	~LinkedList();
 
 	void AddItem(ListItem);
 	void DeleteItem(ListItem*);

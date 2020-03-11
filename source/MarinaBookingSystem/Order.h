@@ -26,4 +26,5 @@ struct Order {
 	TimeStampIndexes timings;
 	float cost;
 	int orderNumber;
+	std::string type;
 };

@@ -7,7 +7,6 @@ public:
 
 	ListItem();
 	ListItem(Boat);
-	~ListItem();
 
 	void SetNextPointer(ListItem*);
 	void SetPrevPointer(ListItem*);

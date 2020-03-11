@@ -24,7 +24,7 @@ void Environment::SetupBoatEntryOrder(std::vector<Order> allOrders) {
 	spawnOrder = LinkedList();
 
 	//loops through each of the orders
-	for (size_t i = 0; i < allOrders.size(); i++)
+	for (int i = 0; i < allOrders.size(); i++)
 
 		//adds a list item to the linked list
 		spawnOrder.AddItem(ListItem(Boat(

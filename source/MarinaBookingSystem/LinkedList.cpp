@@ -13,6 +13,10 @@ LinkedList::LinkedList() {
 	end = nullptr;
 }
 
+LinkedList::~LinkedList() {
+
+}
+
 //adds a new item
 void LinkedList::AddItem(ListItem newItem) {
 
