@@ -161,6 +161,9 @@ void LinkedList::DeleteItem(ListItem* toRemove) {
 			//sets the prev item's next item to the current item's next item
 			toRemove->GetPrevPointer()->SetNextPointer(toRemove->GetNextPointer());
 		}
+
+		//re-allocates the newly deleted memory space
+		delete toRemove;
 	}
 }
 
